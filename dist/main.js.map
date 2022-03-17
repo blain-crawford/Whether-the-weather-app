@@ -1,0 +1,1 @@
+{"version":3,"file":"main.js","mappings":";;;;;AAAA,IAAMA,EAAE,GAAGC,QAAQ,CAACC,aAAT,CAAuB,IAAvB,CAAX;AACAF,EAAE,CAACG,SAAH,GAAe,eAAf,C","sources":["webpack://whether-the-weather/./src/index.js"],"sourcesContent":["const h1 = document.querySelector('h1');\nh1.innerText = 'Hello, World!';"],"names":["h1","document","querySelector","innerText"],"sourceRoot":""}
