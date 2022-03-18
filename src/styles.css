@@ -17,3 +17,31 @@
   color: red;
   font-size: 15px;
 }
+
+#five-day-forecast {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.forecast {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding:0 20px 0 20px;
+}
+
+.weather-symbol {
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+.high-low-temp {
+  display: flex;
+  font-size: 15px;
+  width: 100%;
+  gap: 5px;
+}
+

@@ -34,9 +34,11 @@ const searchName = async (city) => {
     );
 
     const cityInformation = await cityResponse.json();
-
-    if (cityInformation[0].name) {
-      cityDisplay.innerText = cityInformation[0].name;
+      
+    if (cityInformation[0].name && cityInformation[0].state) {
+      cityDisplay.innerText = `${cityInformation[0].name}, ${cityInformation[0].state}`;
+    } else if (cityInformation[0].name && !cityInformation[0].state) {
+      cityDisplay.innerText = `${cityInformation[0].name, cityInformation[0].country}`
     }
 
     return [cityInformation[0].lat, cityInformation[0].lon];
@@ -45,6 +47,7 @@ const searchName = async (city) => {
   }
 };
 
+//Still need to find a way to show sate!!!!!
 const searchZipCode = async (zipcode) => {
   try {
     const zipcodeResponse = await fetch(
@@ -55,8 +58,16 @@ const searchZipCode = async (zipcode) => {
     );
 
     const zipcodeInformation = await zipcodeResponse.json();
-    if (zipcodeInformation.name) {
-      cityDisplay.innerText = zipcodeInformation.name;
+    console.log(zipcodeInformation)
+    const stateResponse = await fetch(
+      `http://api.openweathermap.org/geo/1.0/direct?q=${zipcodeInformation.name}&appid=${key}`,
+      {
+        mode: 'cors'
+      });
+    
+    const stateInformation = await stateResponse.json() 
+    if (zipcodeInformation.name && stateInformation[0].name) {
+      `${cityDisplay.innerText = zipcodeInformation.name}, ${stateInformation[0].state}`;
     }
     return [zipcodeInformation.lat, zipcodeInformation.lon];
   } catch (error) {
@@ -64,7 +75,7 @@ const searchZipCode = async (zipcode) => {
   }
 };
 
-const searchAreaWeather = async (latitude, longitude) => {
+const showAreaCurrentWeather = async (latitude, longitude) => {
   try {
     const weatherSearch = fetch(
       `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}&units=imperial`,
@@ -80,6 +91,10 @@ const searchAreaWeather = async (latitude, longitude) => {
   }
 };
 
+const showFiveDayForecast = async () => {
+  //
+}
+
 const searchCityByNameOrZipcode = () => {
   return new Promise((resolve, reject) => {
     const cityBeingSearched = cityInput.value;
@@ -94,7 +109,7 @@ const searchCityByNameOrZipcode = () => {
   })
     .then((response) => {
       if (response) {
-        searchAreaWeather(response[0], response[1]);
+        showAreaCurrentWeather(response[0], response[1]);
       }
       clearCityInput();
     })
