@@ -7,6 +7,17 @@ const searchButton = document.querySelector('#search-button');
 const cityDisplay = document.querySelector('#city');
 const currentTemp = document.querySelector('#current-temp');
 const searchError = document.querySelector('#search-error');
+const forecastDays = document.querySelectorAll('.day-of-week');
+const dayArray = [
+  'Sun',
+  'Mon',
+  'Tue',
+  'Wed',
+  'Thu',
+  'Fri',
+  'Sat'
+];
+
 
 const clearCityInput = () => {
   cityInput.value = '';
@@ -47,7 +58,7 @@ const searchName = async (city) => {
   }
 };
 
-//Still need to find a way to show sate!!!!!
+//Still need to find a way to show state!!!!!
 const searchZipCode = async (zipcode) => {
   try {
     const zipcodeResponse = await fetch(
@@ -58,7 +69,7 @@ const searchZipCode = async (zipcode) => {
     );
 
     const zipcodeInformation = await zipcodeResponse.json();
-    console.log(zipcodeInformation)
+
     const stateResponse = await fetch(
       `http://api.openweathermap.org/geo/1.0/direct?q=${zipcodeInformation.name}&appid=${key}`,
       {
@@ -91,8 +102,32 @@ const showAreaCurrentWeather = async (latitude, longitude) => {
   }
 };
 
-const showFiveDayForecast = async () => {
-  //
+const populateForecastDays = (daysOfWeek) => {
+  for (let i = 0; i < daysOfWeek.length; i++) {
+    forecastDays[i].innerText = dayArray[daysOfWeek[i]];
+  }
+};
+
+const showFiveDayForecast = async (latitude, longitude) => {
+  const fiveDayForecastResponse = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${key}`, 
+  {
+    mode: 'cors'
+  })
+
+  let dateArray = [];
+  const fiveDayForecastInformation = await fiveDayForecastResponse.json()
+ 
+  for(let i = 1; i < fiveDayForecastInformation.list.length; i++) {
+    let currentDate = fiveDayForecastInformation.list[i].dt_txt.substring(0, 10)
+    if(dateArray.indexOf(currentDate) === -1) {
+      dateArray.push(currentDate) 
+    }
+  }
+  for(let j = 0; j < dateArray.length; j++) {
+    let dayOfWeek = new Date(dateArray[j]);
+    dateArray[j] = dayOfWeek.getDay()
+  }
+  populateForecastDays(dateArray);
 }
 
 const searchCityByNameOrZipcode = () => {
@@ -110,6 +145,7 @@ const searchCityByNameOrZipcode = () => {
     .then((response) => {
       if (response) {
         showAreaCurrentWeather(response[0], response[1]);
+        showFiveDayForecast(response[0], response[1]);
       }
       clearCityInput();
     })
