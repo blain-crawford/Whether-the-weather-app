@@ -5,6 +5,7 @@ import { key } from './key.js';
 const cityInput = document.querySelector('#city-input');
 const searchButton = document.querySelector('#search-button');
 const cityDisplay = document.querySelector('#city');
+const currentTemp = document.querySelector('#current-temp');
 const searchError = document.querySelector('#search-error');
 
 const clearCityInput = () => {
@@ -84,8 +85,18 @@ const searchZipCode = async (zipcode) => {
 //   searchError.innerText = '';
 // };
 
-const searchAreaWeather = (latitude, longitude) => {
-  console.log(latitude, longitude);
+const searchAreaWeather = async (latitude, longitude) => {
+  try {
+    const weatherSearch = fetch (`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}&units=imperial`, 
+    {
+      mode: 'cors'
+    })
+
+    const weatherInformation = await (await weatherSearch).json();
+    currentTemp.innerText = `${Math.floor(weatherInformation.main.temp)}°`;
+  } catch (error) {
+    throwSearchError()
+  }
 }
 
 const searchCityByNameOrZipcode = () => {
