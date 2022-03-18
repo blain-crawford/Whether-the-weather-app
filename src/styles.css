@@ -1,15 +1,19 @@
-#form-holder {
-  width: 200px;
+#city-search-form {
+  width: 300px;
   margin: 0 auto;
-}
-
-#search-city-form {
   display: flex;
   flex-direction: column;
-  width: 200px;
-  margin: 0 auto;
+}
+
+#city-input {
+  width: 75%;
 }
 
 #search-button {
   width: 50%;
+}
+
+#search-error {
+  color: red;
+  font-size: 15px;
 }

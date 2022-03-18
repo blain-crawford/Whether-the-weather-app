@@ -5,6 +5,7 @@ import { key } from './key.js';
 const cityInput = document.querySelector('#city-input');
 const searchButton = document.querySelector('#search-button');
 const cityDisplay = document.querySelector('#city');
+const searchError = document.querySelector('#search-error')
 
 const clearCityInput = () => {
   cityInput.value = '';
@@ -13,16 +14,22 @@ const clearCityInput = () => {
 const zipOrCityName = (searchInput) => {
   return /\d/.test(searchInput);
 };
-const searchName = async (city) => {
-  const cityResponse = await fetch(
-    `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${key}`,
-    {
-      mode: 'cors',
-    },
-  );
 
-  const cityInformation = await cityResponse.json();
-  cityDisplay.innerText = cityInformation[0].name;
+const searchName = async (city) => {
+  try {
+    const cityResponse = await fetch(
+      `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${key}`,
+      {
+        mode: 'cors',
+      },
+    );
+    
+    const cityInformation = await cityResponse.json();
+    cityDisplay.innerText = cityInformation[0].name;
+  } catch (error) {
+    searchError.innerText = 'Location not found**'
+  }
+
 };
 
 const searchZipCode = async (zipcode) => {
@@ -36,11 +43,12 @@ const searchZipCode = async (zipcode) => {
   const zipcodeInformation = await zipcodeResponse.json();
   cityDisplay.innerText = zipcodeInformation.name;
 };
+
 const searchCityByNameOrZipcode = async (e) => {
   const cityBeingSearched = cityInput.value;
   try {
     if (cityInput.value === '') {
-      alert('Enter city please');
+      searchError.innerText = 'Please enter a city of zipcode*'
       return;
     }
     if (zipOrCityName(cityBeingSearched)) {
@@ -49,9 +57,18 @@ const searchCityByNameOrZipcode = async (e) => {
       searchName(cityBeingSearched);
     }
   } catch (error) {
-    alert("can't Find your city Bub~");
+    searchError.innerText = 'Location not found**'
+    
   }
   clearCityInput();
+  searchError.innerText = '';
 };
 
 searchButton.addEventListener('click', searchCityByNameOrZipcode, false);
+cityInput.addEventListener('keyup', function(e) {
+  if(e.keyCode === 13) {
+    console.log(e)
+    searchCityByNameOrZipcode()
+    e.preventDefault()
+  }
+}, false)
