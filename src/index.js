@@ -9,7 +9,7 @@ const cityDisplay = document.querySelector('#city');
 const clearCityInput = () => {
   cityInput.value = '';
 }
-const searchLocationWeather = async (e) => {
+const searchCityByNameOrZipcode = async (e) => {
   const cityBeingSearched = cityInput.value;
   try {
     if (cityInput.value === '') {
@@ -55,4 +55,4 @@ const searchZipCode = async (zipcode) => {
   cityDisplay.innerText =zipcodeInformation.name;
 };
 
-searchButton.addEventListener('click', searchLocationWeather, false);
+searchButton.addEventListener('click', searchCityByNameOrZipcode, false);
