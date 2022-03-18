@@ -8,7 +8,7 @@ const cityDisplay = document.querySelector('#city');
 
 const clearCityInput = () => {
   cityInput.value = '';
-}
+};
 
 const zipOrCityName = (searchInput) => {
   return /\d/.test(searchInput);
@@ -23,7 +23,6 @@ const searchName = async (city) => {
 
   const cityInformation = await cityResponse.json();
   cityDisplay.innerText = cityInformation[0].name;
-  
 };
 
 const searchZipCode = async (zipcode) => {
@@ -35,13 +34,13 @@ const searchZipCode = async (zipcode) => {
   );
 
   const zipcodeInformation = await zipcodeResponse.json();
-  cityDisplay.innerText =zipcodeInformation.name;
+  cityDisplay.innerText = zipcodeInformation.name;
 };
 const searchCityByNameOrZipcode = async (e) => {
   const cityBeingSearched = cityInput.value;
   try {
     if (cityInput.value === '') {
-      alert('Enter city please')
+      alert('Enter city please');
       return;
     }
     if (zipOrCityName(cityBeingSearched)) {
@@ -54,7 +53,5 @@ const searchCityByNameOrZipcode = async (e) => {
   }
   clearCityInput();
 };
-
-
 
 searchButton.addEventListener('click', searchCityByNameOrZipcode, false);
