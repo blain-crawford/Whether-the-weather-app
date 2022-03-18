@@ -7,11 +7,13 @@
   <title>Whether the Weather</title>
 </head>
 <body>
-  <div id="form-holder">
-    <form id="search-city-form">
+  <div id="city-search-form">
+    <div id="label-and-error-container">
       <label for="city-input">Enter City or Zip</label>
-      <input id="city-input" type="text" autocomplete="off" placeholder="city/zip code"> 
-    </form>
+      <span id="search-error"></span>
+    </div>
+    <input id="city-input" type="text" autocomplete="off" placeholder="city/zip code">
+    
     <button id="search-button">Search</button>
   </div>
   <h1 id="city">Boston</h1>
