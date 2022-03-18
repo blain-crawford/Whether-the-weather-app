@@ -26,15 +26,15 @@ const zipOrCityName = (searchInput) => {
 
 const searchName = async (city) => {
   try {
-      const cityResponse = await fetch(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${key}`,
-        {
-          mode: 'cors',
-        },
-      );
-    
+    const cityResponse = await fetch(
+      `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${key}`,
+      {
+        mode: 'cors',
+      },
+    );
+
     const cityInformation = await cityResponse.json();
-    
+
     if (cityInformation[0].name) {
       cityDisplay.innerText = cityInformation[0].name;
     }
@@ -47,16 +47,15 @@ const searchName = async (city) => {
 
 const searchZipCode = async (zipcode) => {
   try {
-    
-      const zipcodeResponse = await fetch(
-        `http://api.openweathermap.org/geo/1.0/zip?zip=${zipcode}&appid=${key}`,
-        {
-          mode: 'cors',
-        },
-      );
-    
+    const zipcodeResponse = await fetch(
+      `http://api.openweathermap.org/geo/1.0/zip?zip=${zipcode}&appid=${key}`,
+      {
+        mode: 'cors',
+      },
+    );
+
     const zipcodeInformation = await zipcodeResponse.json();
-    if(zipcodeInformation.name) {
+    if (zipcodeInformation.name) {
       cityDisplay.innerText = zipcodeInformation.name;
     }
     return [zipcodeInformation.lat, zipcodeInformation.lon];
@@ -65,39 +64,21 @@ const searchZipCode = async (zipcode) => {
   }
 };
 
-// const searchCityByNameOrZipcode = async (e) => {
-//   const cityBeingSearched = cityInput.value;
-//   try {
-//     if (cityInput.value === '') {
-//       searchError.innerText = 'Please enter a city of zipcode*'
-//       return;
-//     }
-//     if (zipOrCityName(cityBeingSearched)) {
-//       searchZipCode(cityBeingSearched);
-//     } else {
-//       searchName(cityBeingSearched);
-//     }
-//   } catch (error) {
-//     searchError.innerText = 'Location not found**'
-
-//   }
-//   clearCityInput();
-//   searchError.innerText = '';
-// };
-
 const searchAreaWeather = async (latitude, longitude) => {
   try {
-    const weatherSearch = fetch (`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}&units=imperial`, 
-    {
-      mode: 'cors'
-    })
+    const weatherSearch = fetch(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}&units=imperial`,
+      {
+        mode: 'cors',
+      },
+    );
 
     const weatherInformation = await (await weatherSearch).json();
     currentTemp.innerText = `${Math.floor(weatherInformation.main.temp)}°`;
   } catch (error) {
-    throwSearchError()
+    throwSearchError();
   }
-}
+};
 
 const searchCityByNameOrZipcode = () => {
   return new Promise((resolve, reject) => {
@@ -112,7 +93,7 @@ const searchCityByNameOrZipcode = () => {
     }
   })
     .then((response) => {
-      if(response) {
+      if (response) {
         searchAreaWeather(response[0], response[1]);
       }
       clearCityInput();
@@ -122,6 +103,9 @@ const searchCityByNameOrZipcode = () => {
     });
 };
 
+/**
+ * adding event listeners
+ */
 searchButton.addEventListener('click', searchCityByNameOrZipcode, false);
 cityInput.addEventListener(
   'keyup',
