@@ -9,23 +9,6 @@ const cityDisplay = document.querySelector('#city');
 const clearCityInput = () => {
   cityInput.value = '';
 }
-const searchCityByNameOrZipcode = async (e) => {
-  const cityBeingSearched = cityInput.value;
-  try {
-    if (cityInput.value === '') {
-      alert('Enter city please')
-      return;
-    }
-    if (zipOrCityName(cityBeingSearched)) {
-      searchZipCode(cityBeingSearched);
-    } else {
-      searchName(cityBeingSearched);
-    }
-  } catch (error) {
-    alert("can't Find your city Bub~");
-  }
-  clearCityInput();
-};
 
 const zipOrCityName = (searchInput) => {
   return /\d/.test(searchInput);
@@ -54,5 +37,24 @@ const searchZipCode = async (zipcode) => {
   const zipcodeInformation = await zipcodeResponse.json();
   cityDisplay.innerText =zipcodeInformation.name;
 };
+const searchCityByNameOrZipcode = async (e) => {
+  const cityBeingSearched = cityInput.value;
+  try {
+    if (cityInput.value === '') {
+      alert('Enter city please')
+      return;
+    }
+    if (zipOrCityName(cityBeingSearched)) {
+      searchZipCode(cityBeingSearched);
+    } else {
+      searchName(cityBeingSearched);
+    }
+  } catch (error) {
+    alert("can't Find your city Bub~");
+  }
+  clearCityInput();
+};
+
+
 
 searchButton.addEventListener('click', searchCityByNameOrZipcode, false);
