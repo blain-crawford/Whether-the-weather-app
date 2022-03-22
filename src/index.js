@@ -120,14 +120,12 @@ const showFiveDayForecast = async (latitude, longitude) => {
         mode: 'cors',
       },
     );
+    
     let dateArray = [];
     const fiveDayForecastInformation = await fiveDayForecastResponse.json();
 
     for (let i = 1; i < fiveDayForecastInformation.list.length; i++) {
-      let currentDate = fiveDayForecastInformation.list[i].dt_txt.substring(
-        0,
-        10,
-      );
+      let currentDate = fiveDayForecastInformation.list[i].dt_txt.substring(0, 10);
       if (dateArray.indexOf(currentDate) === -1) {
         dateArray.push(currentDate);
       }
