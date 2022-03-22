@@ -32,22 +32,20 @@ const zipOrCityName = (searchInput) => {
 
 const searchName = async (city) => {
   try {
-    if (cityInput.value) {
-      const cityResponse = await fetch(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${key}`,
-        {
-          mode: 'cors',
-        },
-      );
-    }
+    // if (cityInput.value) {
+    const cityResponse = await fetch(
+      `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${key}`,
+      {
+        mode: 'cors',
+      },
+    );
+    // }
     const cityInformation = await cityResponse.json();
-
-    if (cityInformation[0].name && cityInformation[0].state) {
+    console.log(cityInformation);
+    if (cityInformation[0].name && cityInformation[0].country === 'US') {
       cityDisplay.innerText = `${cityInformation[0].name}, ${cityInformation[0].state}`;
-    } else if (cityInformation[0].name && !cityInformation[0].state) {
-      cityDisplay.innerText = `${
-        (cityInformation[0].name, cityInformation[0].country)
-      }`;
+    } else {
+      cityDisplay.innerText = `${cityInformation[0].name}, ${cityInformation[0].country}`;
     }
 
     return [cityInformation[0].lat, cityInformation[0].lon];
@@ -56,32 +54,58 @@ const searchName = async (city) => {
   }
 };
 
-//Still need to find a way to show state!!!!!
 const searchZipCode = async (zipcode) => {
   try {
-      
-      const zipcodeResponse = await fetch(
-        `http://api.openweathermap.org/geo/1.0/zip?zip=${zipcode}&appid=${key}`,
-        {
-          mode: 'cors',
-        },
-      );
-      const zipcodeInformation = await zipcodeResponse.json();
-    
+    const zipcodeResponse = await fetch(
+      `http://api.openweathermap.org/geo/1.0/zip?zip=${zipcode}&appid=${key}`,
+      {
+        mode: 'cors',
+      },
+    );
+
+    const zipcodeInformation = await zipcodeResponse.json();
 
     const stateResponse = await fetch(
-      `http://api.openweathermap.org/geo/1.0/direct?q=${zipcodeInformation.name}&appid=${key}`,
+      `http://api.openweathermap.org/geo/1.0/direct?q=${zipcodeInformation.name},US&appid=${key}&limit=10`,
       {
         mode: 'cors',
       },
     );
 
     const stateInformation = await stateResponse.json();
-    if (zipcodeInformation.name && stateInformation[0].name) {
-      `${(cityDisplay.innerText = zipcodeInformation.name)}, ${
-        stateInformation[0].state
-      }`;
+    const latitudeArray = [];
+    const longitudeArray = [];
+    const latitudeToCheck = zipcodeInformation.lat;
+    const longitudeToCheck = zipcodeInformation.lon;
+
+    //Create Array to check latitudes
+    for (let i = 0; i < stateInformation.length; i++) {
+      latitudeArray.push(stateInformation[i].lat);
+      longitudeArray.push(stateInformation[i].lon);
     }
+
+    //compare against searched zipcode latitude
+    const correctLatitude = latitudeArray.reduce(function (prev, curr) {
+      return Math.abs(curr - latitudeToCheck) < Math.abs(prev - latitudeToCheck)
+        ? curr
+        : prev;
+    });
+
+    //compare against searched longitude zipcode
+    const correctLongitude = longitudeArray.reduce(function (prev, curr) {
+      return Math.abs(curr - longitudeToCheck) < Math.abs(prev - longitudeToCheck)
+        ? curr
+        : prev;
+    });
+    
+    //Find correct state with latitude and longitude
+    for (let j = 0; j < stateInformation.length; j++) {
+      if (stateInformation[j].lat === correctLatitude && stateInformation[j].lon === correctLongitude) {
+        let stateName = stateInformation[j].state;
+        cityDisplay.innerText = `${zipcodeInformation.name}, ${stateName}`;
+      }
+    }
+
     return [zipcodeInformation.lat, zipcodeInformation.lon];
   } catch (error) {
     throwSearchError();
@@ -120,12 +144,14 @@ const showFiveDayForecast = async (latitude, longitude) => {
         mode: 'cors',
       },
     );
-    
     let dateArray = [];
     const fiveDayForecastInformation = await fiveDayForecastResponse.json();
 
     for (let i = 1; i < fiveDayForecastInformation.list.length; i++) {
-      let currentDate = fiveDayForecastInformation.list[i].dt_txt.substring(0, 10);
+      let currentDate = fiveDayForecastInformation.list[i].dt_txt.substring(
+        0,
+        10,
+      );
       if (dateArray.indexOf(currentDate) === -1) {
         dateArray.push(currentDate);
       }
