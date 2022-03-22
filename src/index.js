@@ -113,7 +113,6 @@ const showFiveDayForecast = async (latitude, longitude) => {
   {
     mode: 'cors'
   })
-
   let dateArray = [];
   const fiveDayForecastInformation = await fiveDayForecastResponse.json()
  
