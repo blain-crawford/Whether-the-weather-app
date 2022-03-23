@@ -31,18 +31,35 @@ const zipOrCityName = (searchInput) => {
   return /\d/.test(searchInput);
 };
 
+const searchCityAndState = async (cityAndState) => {
+  try {
+    cityAndState = cityAndState.split(', ')
+    const cityName = cityAndState[0];
+    const stateName = cityAndState[1];
+    const cityAndStateResponse = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${cityName},${stateName},US&appid=${key}`, {
+      mode: 'cors'
+    })
+    const cityAndStateInformation = await cityAndStateResponse.json();
+    cityDisplay.innerText = `${cityAndStateInformation[0].name}, ${cityAndStateInformation[0].state}`;
+
+    return [cityAndStateInformation[0].lat, cityAndStateInformation[0].lon];
+
+  } catch (error) {
+    throwSearchError();
+    console.log(error)
+  }
+}
+
 const searchName = async (city) => {
   try {
-    // if (cityInput.value) {
     const cityResponse = await fetch(
       `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${key}`,
       {
         mode: 'cors',
       },
     );
-    // }
     const cityInformation = await cityResponse.json();
-    console.log(cityInformation);
+    
     if (cityInformation[0].name && cityInformation[0].country === 'US') {
       cityDisplay.innerText = `${cityInformation[0].name}, ${cityInformation[0].state}`;
     } else {
@@ -137,6 +154,8 @@ const searchCityByNameOrZipcode = () => {
     }
     if (zipOrCityName(cityBeingSearched)) {
       resolve(searchZipCode(cityBeingSearched));
+    } else if(!zipOrCityName(cityBeingSearched) && cityBeingSearched.includes(', ')) {
+      resolve(searchCityAndState(cityBeingSearched));
     } else {
       resolve(searchName(cityBeingSearched));
     }
