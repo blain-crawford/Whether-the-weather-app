@@ -1,7 +1,7 @@
 import { key } from './key.js';
 import { throwSearchError } from './index.js';
 
-const showFiveDayForecastInImperialUnits = (() => {
+const weatherInImperialUnits = (() => {
   const cityInput = document.querySelector('#city-input');
   const searchButton = document.querySelector('#search-button');
   const cityDisplay = document.querySelector('#city');
@@ -10,6 +10,23 @@ const showFiveDayForecastInImperialUnits = (() => {
   const forecastDays = document.querySelectorAll('.day-of-week');
   const dayArray = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+
+  const showAreaCurrentWeather = async (latitude, longitude) => {
+    try {
+      const weatherSearch = fetch(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}&units=imperial`,
+        {
+          mode: 'cors',
+        },
+      );
+  
+      const weatherInformation = await (await weatherSearch).json();
+      currentTemp.innerText = `${Math.floor(weatherInformation.main.temp)}°`;
+    } catch (error) {
+      throwSearchError();
+    }
+  };
+  
   const populateForecastDays = (daysOfWeek) => {
     for (let i = 0; i < daysOfWeek.length; i++) {
       if (forecastDays[i]) {
@@ -65,7 +82,7 @@ const showFiveDayForecastInImperialUnits = (() => {
     }
   };
 
-  return { populateForecastDays, showFiveDayForecast };
+  return { populateForecastDays, showFiveDayForecast, showAreaCurrentWeather };
 })();
 
-export { showFiveDayForecastInImperialUnits };
+export { weatherInImperialUnits };

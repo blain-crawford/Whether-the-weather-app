@@ -1,7 +1,7 @@
 import 'regenerator-runtime/runtime';
 import './styles.css';
 import { key } from './key.js';
-import{ showFiveDayForecastInImperialUnits } from './fiveDayImperial.js'
+import{ weatherInImperialUnits } from './weatherImperial.js'
 
 const cityInput = document.querySelector('#city-input');
 const searchButton = document.querySelector('#search-button');
@@ -130,21 +130,6 @@ const searchZipCode = async (zipcode) => {
   }
 };
 
-const showAreaCurrentWeather = async (latitude, longitude) => {
-  try {
-    const weatherSearch = fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}&units=imperial`,
-      {
-        mode: 'cors',
-      },
-    );
-
-    const weatherInformation = await (await weatherSearch).json();
-    currentTemp.innerText = `${Math.floor(weatherInformation.main.temp)}°`;
-  } catch (error) {
-    throwSearchError();
-  }
-};
 
 const searchCityByNameOrZipcode = () => {
   return new Promise((resolve, reject) => {
@@ -162,10 +147,10 @@ const searchCityByNameOrZipcode = () => {
   })
     .then((response) => {
       if (response) {
-        showAreaCurrentWeather(response[0], response[1]);
+        weatherInImperialUnits.showAreaCurrentWeather(response[0], response[1]);
         clearSearchError();
         clearCityInput();
-        showFiveDayForecastInImperialUnits.showFiveDayForecast(response[0], response[1]);
+        weatherInImperialUnits.showFiveDayForecast(response[0], response[1]);
       }
     })
     .catch((error) => {
