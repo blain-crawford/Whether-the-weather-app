@@ -37,7 +37,7 @@ const weatherInImperialUnits = (() => {
 
   const populateForecastWeather = async (latitude, longitude) => {
     try {
-      
+      const storedForecastWeather = {};
       const weatherResponse = await fetch(
         `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=imperial`,
         {
@@ -45,7 +45,12 @@ const weatherInImperialUnits = (() => {
         },
       );
       const weatherInformation = await weatherResponse.json();
-      
+      for (let i = 1; i < 6; i++) {
+        storedForecastWeather.day[i] = {}
+        // storedForecastWeather.day[i].max = weatherInformation.daily.temp.max
+        // storedForecastWeather.day[i].min = weatherInformation.daily.temp.min
+      }
+      console.log(storedForecastWeather);
     } catch (error) {
       console.log(error);
     }
