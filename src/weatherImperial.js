@@ -35,17 +35,17 @@ const weatherInImperialUnits = (() => {
     }
   };
 
-  const showFiveDayForecastWeather = async (latitude, longitude) => {
+  const populateForecastWeather = async (latitude, longitude) => {
     try {
       
       const weatherResponse = await fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${key}&units=imperial`,
+        `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=imperial`,
         {
           mode: 'cors',
         },
       );
       const weatherInformation = await weatherResponse.json();
-      console.log(weatherInformation);
+      
     } catch (error) {
       console.log(error);
     }
@@ -76,7 +76,7 @@ const weatherInImperialUnits = (() => {
         dateArray[j] = dayOfWeek.getDay();
       }
       populateForecastDays(dateArray);
-      showFiveDayForecastWeather(latitude, longitude);
+      populateForecastWeather(latitude, longitude);
     } catch (error) {
       throwSearchError();
     }
