@@ -9,7 +9,9 @@ const weatherInImperialUnits = (() => {
   const searchError = document.querySelector('#search-error');
   const forecastDays = document.querySelectorAll('.day-of-week');
   const dayArray = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
+  const lowTemps = document.querySelectorAll('.low-temp');
+  const highTemps = document.querySelectorAll('.high-temp');
+  
 
   const showAreaCurrentWeather = async (latitude, longitude) => {
     try {
@@ -30,14 +32,16 @@ const weatherInImperialUnits = (() => {
   const populateForecastDays = (daysOfWeek) => {
     for (let i = 0; i < daysOfWeek.length; i++) {
       if (forecastDays[i]) {
-        forecastDays[i].innerText = dayArray[daysOfWeek[i]];
+        forecastDays[i].innerText = dayArray[daysOfWeek[i + 1]];
+      } if (dayArray[daysOfWeek[i + 1]] === undefined) {
+        forecastDays[i].innerText = dayArray[1]
       }
     }
   };
 
-  const populateForecastWeather = async (latitude, longitude) => {
+  const populateForecastHighAndLow = async (latitude, longitude) => {
     try {
-      const storedForecastWeather = {};
+      const storedForecastHighsAndLows = {};
       const weatherResponse = await fetch(
         `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=imperial`,
         {
@@ -45,12 +49,23 @@ const weatherInImperialUnits = (() => {
         },
       );
       const weatherInformation = await weatherResponse.json();
+      
+
+      //Store all hight and low temp data for forecast
       for (let i = 1; i < 6; i++) {
-        storedForecastWeather.day[i] = {}
-        // storedForecastWeather.day[i].max = weatherInformation.daily.temp.max
-        // storedForecastWeather.day[i].min = weatherInformation.daily.temp.min
+        storedForecastHighsAndLows[`day${i}`] = {}
+        storedForecastHighsAndLows[`day${i}`]['min'] = weatherInformation.daily[i].temp.min
+        storedForecastHighsAndLows[`day${i}`]['max'] = weatherInformation.daily[i].temp.max
       }
-      console.log(storedForecastWeather);
+
+      
+      //Add to divs in fiveday forecast 
+      for(let j = 0; j < lowTemps.length; j++){
+        lowTemps[j].innerText = Math.floor(storedForecastHighsAndLows[`day${j + 1}`].min) + '°F';
+        highTemps[j].innerText = Math.floor(storedForecastHighsAndLows[`day${j + 1}`].max) + '°F';
+        
+      }
+
     } catch (error) {
       console.log(error);
     }
@@ -81,7 +96,7 @@ const weatherInImperialUnits = (() => {
         dateArray[j] = dayOfWeek.getDay();
       }
       populateForecastDays(dateArray);
-      populateForecastWeather(latitude, longitude);
+      populateForecastHighAndLow(latitude, longitude);
     } catch (error) {
       throwSearchError();
     }
