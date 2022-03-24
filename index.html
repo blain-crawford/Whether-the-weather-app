@@ -1,67 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://kit.fontawesome.com/05fadaaa36.js" crossorigin="anonymous"></script>
-  <title>Whether the Weather</title>
-</head>
-<body>
-  <div id="city-search-form">
-    <div id="label-and-error-container">
-      <label for="city-input">Enter City or Zip</label>
-      <span id="search-error"></span>
-    </div>
-    <input id="city-input" type="text" autocomplete="off" placeholder="city, zipcode, or city, state">
-    <button id="search-button">Search</button>
-  </div>
-  <div id="name-and-time">
-    <h1 id="current-temp"></h1>
-    <h2 id="city"></h2>
-  </div>
-  <div id="five-day-forecast">
-    <div id="" class="forecast">
-      <h3 class="day-of-week"></h3>
-      <i class="fa-solid fa-sun fa-2xl weather-symbol"></i>
-      <div class="high-low-temp">
-        <p class="low-temp">45°</p>
-        <p class="high-temp">55°</p>
-    </div>
-    </div>
-    <div id="" class="forecast">
-      <h3 class="day-of-week"></h3>
-      <i class="fa-solid fa-sun fa-2xl weather-symbol"></i>
-      <div class="high-low-temp">
-        <p class="low-temp">45°</p>
-        <p class="high-temp">55°</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/05fadaaa36.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Whether the Weather</title>
+  </head>
+  <body>
+    <div id="city-search-form">
+      <div id="label-and-error-container">
+        <label for="city-input">Enter City or Zip</label>
+        <span id="search-error"></span>
+      </div>
+      <input
+        id="city-input"
+        type="text"
+        autocomplete="off"
+        placeholder="city, zipcode, or city, state"
+      />
+      <div id="search-button-and-unit-selector">
+        <button id="search-button">Search</button>
+        <div id="unit-selector">
+          <p class="unit">°C /<strong>°F</strong></p>
+        </div>
       </div>
     </div>
-    <div id="" class="forecast">
-      <h3 class="day-of-week"></h3>
-      <i class="fa-solid fa-sun fa-2xl weather-symbol"></i>
-      <div class="high-low-temp">
-        <p class="low-temp">45°</p>
-        <p class="high-temp">55°</p>
+    <div id="name-and-time">
+      <h1 id="current-temp"></h1>
+      <h2 id="city"></h2>
+    </div>
+    <div id="five-day-forecast">
+      <div id="" class="forecast">
+        <h3 class="day-of-week"></h3>
+        <div class="weather-symbol"></div>
+        <div class="high-low-temp">
+          <p class="low-temp"></p>
+          <p class="high-temp"></p>
+        </div>
+      </div>
+      <div id="" class="forecast">
+        <h3 class="day-of-week"></h3>
+        <div class="weather-symbol"></div>
+        <div class="high-low-temp">
+          <p class="low-temp"></p>
+          <p class="high-temp"></p>
+        </div>
+      </div>
+      <div id="" class="forecast">
+        <h3 class="day-of-week"></h3>
+        <div class="weather-symbol"></div>
+        <div class="high-low-temp">
+          <p class="low-temp"></p>
+          <p class="high-temp"></p>
+        </div>
+      </div>
+      <div id="" class="forecast">
+        <h3 class="day-of-week"></h3>
+        <div class="weather-symbol"></div>
+        <div class="high-low-temp">
+          <p class="low-temp"></p>
+          <p class="high-temp"></p>
+        </div>
+      </div>
+      <div id="" class="forecast">
+        <h3 class="day-of-week"></h3>
+        <div class="weather-symbol"></div>
+        <div class="high-low-temp">
+          <p class="low-temp"></p>
+          <p class="high-temp"></p>
+        </div>
       </div>
     </div>
-    <div id="" class="forecast">
-      <h3 class="day-of-week"></h3>
-      <i class="fa-solid fa-sun fa-2xl weather-symbol"></i>
-      <div class="high-low-temp">
-        <p class="low-temp">45°</p>
-        <p class="high-temp">55°</p>
-      </div>
-    </div>
-    <div id="" class="forecast">
-      <h3 class="day-of-week"></h3>
-      <i class="fa-solid fa-sun fa-2xl weather-symbol"></i>
-      <div class="high-low-temp">
-        <p class="low-temp">45°</p>
-        <p class="high-temp">55°</p>
-      </div>
-    </div>
-  </div>
-  <script type="module" src="./main.js"></script>
-</body>
+    <script type="module" src="./main.js"></script>
+  </body>
 </html>
