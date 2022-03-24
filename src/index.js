@@ -6,7 +6,6 @@ import{ weatherInImperialUnits } from './weatherImperial.js'
 const cityInput = document.querySelector('#city-input');
 const searchButton = document.querySelector('#search-button');
 const cityDisplay = document.querySelector('#city');
-const currentTemp = document.querySelector('#current-temp');
 const searchError = document.querySelector('#search-error');
 const imperialUnits = true;
 
@@ -131,12 +130,13 @@ const searchZipCode = async (zipcode) => {
 };
 
 
-const searchCityByNameOrZipcode = () => {
+const searchCityByNameOrZipcode = (cityBeingSearched) => {
   return new Promise((resolve, reject) => {
-    const cityBeingSearched = cityInput.value;
+    cityBeingSearched = cityInput.value;
     if (cityBeingSearched === '') {
       throwSearchError();
     }
+
     if (zipOrCityName(cityBeingSearched)) {
       resolve(searchZipCode(cityBeingSearched));
     } else if(!zipOrCityName(cityBeingSearched) && cityBeingSearched.includes(', ')) {
@@ -180,5 +180,8 @@ cityInput.addEventListener(
   },
   false,
 );
+
+//Start App with auto population of weather
+searchCityByNameOrZipcode('Tipton');
 
 export { throwSearchError }
