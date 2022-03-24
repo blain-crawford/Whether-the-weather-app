@@ -11,9 +11,10 @@ const weatherInImperialUnits = (() => {
   const dayArray = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const lowTemps = document.querySelectorAll('.low-temp');
   const highTemps = document.querySelectorAll('.high-temp');
+  const weatherSymbols = document.querySelectorAll('.weather-symbole');
   
 
-  const showAreaCurrentWeather = async (latitude, longitude) => {
+  const showAreaCurrentTemp = async (latitude, longitude) => {
     try {
       const weatherSearch = fetch(
         `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}&units=imperial`,
@@ -47,7 +48,7 @@ const weatherInImperialUnits = (() => {
       )
 
     const weatherConditionsInformation = await weatherConditionsResponse.json()
-    console.log(weatherConditionsInformation.data);
+    console.log(weatherConditionsInformation);
     } catch (error) {
       throwSearchError()
       console.log(error)
@@ -119,7 +120,7 @@ const weatherInImperialUnits = (() => {
     }
   };
 
-  return { populateForecastDays, showFiveDayForecast, showAreaCurrentWeather };
+  return { populateForecastDays, showFiveDayForecast, showAreaCurrentTemp };
 })();
 
 export { weatherInImperialUnits };

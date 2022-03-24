@@ -147,7 +147,7 @@ const searchCityByNameOrZipcode = () => {
   })
     .then((response) => {
       if (response) {
-        weatherInImperialUnits.showAreaCurrentWeather(response[0], response[1]);
+        weatherInImperialUnits.showAreaCurrentTemp(response[0], response[1]);
         clearSearchError();
         clearCityInput();
         weatherInImperialUnits.showFiveDayForecast(response[0], response[1]);
