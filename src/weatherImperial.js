@@ -37,6 +37,23 @@ const weatherInImperialUnits = (() => {
     }
   };
 
+  const populateForecastWeather = async (latitude, longitude) => {
+    try {
+      let weatherConditionsResponse = await fetch(
+        `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=imperial`,
+        {
+          mode: 'cors',
+        },
+      )
+
+    const weatherConditionsInformation = await weatherConditionsResponse.json()
+    console.log(weatherConditionsInformation.data);
+    } catch (error) {
+      throwSearchError()
+      console.log(error)
+    }
+  }
+
   const populateForecastHighAndLow = async (latitude, longitude) => {
     try {
       const storedForecastHighsAndLows = {};
@@ -95,6 +112,7 @@ const weatherInImperialUnits = (() => {
       }
       populateForecastDays(dateArray);
       populateForecastHighAndLow(latitude, longitude);
+      populateForecastWeather(latitude, longitude);
     } catch (error) {
       throwSearchError();
       console.log(error);
