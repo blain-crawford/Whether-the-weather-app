@@ -93,9 +93,9 @@ html {
 .full-weather {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   gap: 10px;
-  width: 90%;
+  width: 81%;
 }
 
 .expected-weather {

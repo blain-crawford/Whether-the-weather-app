@@ -12,6 +12,8 @@ const weatherInImperialUnits = (() => {
   const lowTemps = document.querySelectorAll('.low-temp');
   const highTemps = document.querySelectorAll('.high-temp');
   const weatherSymbols = document.querySelectorAll('.expected-weather');
+  const humidityDisplays = document.querySelectorAll('.humidity-display');
+  const chanceOfRainDisplays = document.querySelectorAll('.chance-of-rain-display');
   
 
   const showAreaCurrentTemp = async (latitude, longitude) => {
@@ -61,15 +63,39 @@ const weatherInImperialUnits = (() => {
 
   const populateForecastHumidity = async (latitude, longitude) => {
     try {
-      let weatherConditionsResponse = await fetch(
+      let humidityResponse = await fetch(
         `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=imperial`,
         {
           mode: 'cors',
         },
       )
-      const weatherConditionsInformation = await weatherConditionsResponse.json()
+      const humidityInformation = await humidityResponse.json()
       
+      for(let i = 0; i < humidityDisplays.length; i++) {
+        humidityDisplays[i].innerText = (humidityInformation.daily[i].humidity + '%')
+      }
+
+      } catch (error) {
+        throwSearchError()
+        console.log(error)
+      }
+  }
+
+  const populateForecastChanceOfRain = async (latitude, longitude) => {
+    try {
+      let chanceOfRainResponse = await fetch(
+        `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=imperial`,
+        {
+          mode: 'cors',
+        },
+      )
+      const chanceOfRainInformation = await chanceOfRainResponse.json()
       
+      // Loop through chance of rain perday and populate it into forecast
+      for(let i = 0; i < chanceOfRainDisplays.length; i++) {
+        chanceOfRainDisplays[i].innerText = (chanceOfRainInformation.daily[i].pop * 100 + '%');
+      }
+
       } catch (error) {
         throwSearchError()
         console.log(error)
@@ -133,8 +159,9 @@ const weatherInImperialUnits = (() => {
       }
       populateForecastDays(dateArray);
       populateForecastWeather(latitude, longitude);
-      populateForecastHighAndLow(latitude, longitude);
       populateForecastHumidity(latitude, longitude);
+      populateForecastChanceOfRain(latitude, longitude);
+      populateForecastHighAndLow(latitude, longitude);
     } catch (error) {
       throwSearchError();
       console.log(error);
