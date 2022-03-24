@@ -8,8 +8,7 @@ const searchButton = document.querySelector('#search-button');
 const cityDisplay = document.querySelector('#city');
 const currentTemp = document.querySelector('#current-temp');
 const searchError = document.querySelector('#search-error');
-const forecastDays = document.querySelectorAll('.day-of-week');
-const dayArray = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const imperialUnits = true;
 
 const clearCityInput = () => {
   cityInput.value = '';
@@ -22,8 +21,10 @@ const clearSearchError = () => {
 const throwSearchError = () => {
   if (cityInput.value === '') {
     searchError.innerText = 'Please enter city or zipcode**';
+    clearCityInput();
   } else {
     searchError.innerText = 'Location not found**';
+    clearCityInput();
   }
 };
 
@@ -46,7 +47,6 @@ const searchCityAndState = async (cityAndState) => {
 
   } catch (error) {
     throwSearchError();
-    console.log(error)
   }
 }
 
@@ -146,17 +146,24 @@ const searchCityByNameOrZipcode = () => {
     }
   })
     .then((response) => {
-      if (response) {
+      if (response && imperialUnits) {
         weatherInImperialUnits.showAreaCurrentTemp(response[0], response[1]);
         weatherInImperialUnits.showCurrentWeather(response[0], response[1]);
         clearSearchError();
         clearCityInput();
         weatherInImperialUnits.showFiveDayForecast(response[0], response[1]);
+      } else if (response && !imperialUnits) {
+        if (response && imperialUnits) {
+          // weatherInImperialUnits.showAreaCurrentTemp(response[0], response[1]);
+          // weatherInImperialUnits.showCurrentWeather(response[0], response[1]);
+          clearSearchError();
+          clearCityInput();
+          // weatherInImperialUnits.showFiveDayForecast(response[0], response[1]);
+        }
       }
     })
     .catch((error) => {
       throwSearchError();
-      console.log('this is error?')
     });
 };
 

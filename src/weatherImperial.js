@@ -31,10 +31,9 @@ const weatherInImperialUnits = (() => {
       const tempInformation = await tempResponse.json();
       currentTemp.innerText = `${Math.floor(tempInformation.main.temp)}°`;
       currentMinMax.innerText = `${Math.floor(tempInformation.main.temp_min)}°/${Math.floor(tempInformation.main.temp_max)}°`
-      console.log(tempInformation)
+      
     } catch (error) {
       throwSearchError();
-      console.log(error);
     }
   };
 
@@ -52,7 +51,6 @@ const weatherInImperialUnits = (() => {
      
     } catch (error) {
       throwSearchError();
-      console.log(error);
     }
   }
 
@@ -85,7 +83,7 @@ const weatherInImperialUnits = (() => {
       }
     } catch (error) {
       throwSearchError();
-      console.log(error);
+      
     }
   };
 
@@ -104,7 +102,6 @@ const weatherInImperialUnits = (() => {
       }
     } catch (error) {
       throwSearchError();
-      console.log(error);
     }
   };
 
@@ -125,7 +122,6 @@ const weatherInImperialUnits = (() => {
       }
     } catch (error) {
       throwSearchError();
-      console.log(error);
     }
   };
   const populateForecastHighAndLow = async (latitude, longitude) => {
@@ -157,7 +153,6 @@ const weatherInImperialUnits = (() => {
       }
     } catch (error) {
       throwSearchError();
-      console.log(error);
     }
   };
 
@@ -192,7 +187,6 @@ const weatherInImperialUnits = (() => {
       populateForecastHighAndLow(latitude, longitude);
     } catch (error) {
       throwSearchError();
-      console.log(error);
     }
   };
 
