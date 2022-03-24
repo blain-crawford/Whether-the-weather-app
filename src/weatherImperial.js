@@ -33,9 +33,7 @@ const weatherInImperialUnits = (() => {
     for (let i = 0; i < daysOfWeek.length; i++) {
       if (forecastDays[i]) {
         forecastDays[i].innerText = dayArray[daysOfWeek[i + 1]];
-      } if (dayArray[daysOfWeek[i + 1]] === undefined) {
-        forecastDays[i].innerText = dayArray[1]
-      }
+      } 
     }
   };
 
@@ -99,6 +97,7 @@ const weatherInImperialUnits = (() => {
       populateForecastHighAndLow(latitude, longitude);
     } catch (error) {
       throwSearchError();
+      console.log(error);
     }
   };
 
