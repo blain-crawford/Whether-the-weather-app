@@ -23,6 +23,10 @@ html {
   width: 75%;
 }
 
+#name-and-time {
+  text-align: center;
+}
+
 #search-button {
   width: 50%;
   cursor: pointer;
@@ -56,11 +60,11 @@ html {
 #five-day-forecast {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 90%;
   justify-content: space-evenly;
   margin: 0 auto;
   border-radius: 20px;
-  background-color: #fbefef;
+  background-color: #ebac9d;
 }
 
 .forecast {
@@ -76,10 +80,19 @@ html {
   margin: 0px;
 }
 
-.weather-symbol {
-  margin-top: 5px;
-  margin-bottom: 15px;
+.full-weather {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
+
+.expected-weather {
+  height: 60px;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  margin-left: auto;
+} 
 
 .high-low-temp {
   display: flex;

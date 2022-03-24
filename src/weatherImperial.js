@@ -11,7 +11,7 @@ const weatherInImperialUnits = (() => {
   const dayArray = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const lowTemps = document.querySelectorAll('.low-temp');
   const highTemps = document.querySelectorAll('.high-temp');
-  const weatherSymbols = document.querySelectorAll('.weather-symbole');
+  const weatherSymbols = document.querySelectorAll('.expected-weather');
   
 
   const showAreaCurrentTemp = async (latitude, longitude) => {
@@ -48,7 +48,13 @@ const weatherInImperialUnits = (() => {
       )
 
     const weatherConditionsInformation = await weatherConditionsResponse.json()
-    console.log(weatherConditionsInformation);
+    
+    for(let i = 0; i < weatherSymbols.length; i++) {
+      let expectedWeather = (weatherConditionsInformation.daily[i].weather[0].icon)
+      weatherSymbols[i].src = `http://openweathermap.org/img/wn/${expectedWeather}@2x.png`
+      console.log(weatherConditionsInformation.daily[i].weather[0].icon)
+      console.log(weatherSymbols[i]);
+    }
     } catch (error) {
       throwSearchError()
       console.log(error)
@@ -68,7 +74,7 @@ const weatherInImperialUnits = (() => {
       
 
       //Store all hight and low temp data for forecast
-      for (let i = 1; i < 6; i++) {
+      for (let i = 0; i < 5; i++) {
         storedForecastHighsAndLows[`day${i}`] = {}
         storedForecastHighsAndLows[`day${i}`]['min'] = weatherInformation.daily[i].temp.min
         storedForecastHighsAndLows[`day${i}`]['max'] = weatherInformation.daily[i].temp.max
@@ -77,8 +83,8 @@ const weatherInImperialUnits = (() => {
       
       //Add to divs in fiveday forecast 
       for(let j = 0; j < lowTemps.length; j++){
-        lowTemps[j].innerText = Math.floor(storedForecastHighsAndLows[`day${j + 1}`].min) + '°F';
-        highTemps[j].innerText = Math.floor(storedForecastHighsAndLows[`day${j + 1}`].max) + '°F';
+        lowTemps[j].innerText = Math.floor(storedForecastHighsAndLows[`day${j}`].min) + '°F';
+        highTemps[j].innerText = Math.floor(storedForecastHighsAndLows[`day${j}`].max) + '°F';
         
       }
 
