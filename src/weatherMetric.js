@@ -148,9 +148,9 @@ const weatherInMetricUnits = (() => {
       //Add to divs in fiveday forecast
       for (let j = 0; j < lowTemps.length; j++) {
         lowTemps[j].innerText =
-          Math.floor(storedForecastHighsAndLows[`day${j}`].min) + '°F';
+          Math.floor(storedForecastHighsAndLows[`day${j}`].min) + '°C';
         highTemps[j].innerText =
-          Math.floor(storedForecastHighsAndLows[`day${j}`].max) + '°F';
+          Math.floor(storedForecastHighsAndLows[`day${j}`].max) + '°C';
       }
     } catch (error) {
       throwSearchError();
