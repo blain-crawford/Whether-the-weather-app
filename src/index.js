@@ -2,12 +2,33 @@ import 'regenerator-runtime/runtime';
 import './styles.css';
 import { key } from './key.js';
 import{ weatherInImperialUnits } from './weatherImperial.js'
+import { weatherInMetricUnits } from './weatherMetric.js';
 
 const cityInput = document.querySelector('#city-input');
 const searchButton = document.querySelector('#search-button');
 const cityDisplay = document.querySelector('#city');
 const searchError = document.querySelector('#search-error');
-const imperialUnits = true;
+const imperialSelector = document.querySelector('#imperial');
+const metricSelector = document.querySelector('#metric');
+const unitToggler = document.querySelector('#unit-selector');
+let imperialUnits = true;
+
+const selectDisplayUnit = () => {
+  if (imperialUnits) {
+    imperialUnits = false;
+    metricSelector.classList.add('chosen-unit');
+    imperialSelector.classList.remove('chosen-unit');
+    
+  } else {
+    imperialUnits = true
+    metricSelector.classList.remove('chosen-unit');
+    imperialSelector.classList.add('chosen-unit');
+  }
+  if(cityDisplay.innerText !== '') {
+    cityInput.value = cityDisplay.innerText
+    searchCityByNameOrZipcode();
+  }
+}
 
 const clearCityInput = () => {
   cityInput.value = '';
@@ -153,13 +174,11 @@ const searchCityByNameOrZipcode = (cityBeingSearched) => {
         clearCityInput();
         weatherInImperialUnits.showFiveDayForecast(response[0], response[1]);
       } else if (response && !imperialUnits) {
-        if (response && imperialUnits) {
-          // weatherInImperialUnits.showAreaCurrentTemp(response[0], response[1]);
-          // weatherInImperialUnits.showCurrentWeather(response[0], response[1]);
+          weatherInMetricUnits.showAreaCurrentTemp(response[0], response[1]);
+          weatherInMetricUnits.showCurrentWeather(response[0], response[1]);
           clearSearchError();
           clearCityInput();
-          // weatherInImperialUnits.showFiveDayForecast(response[0], response[1]);
-        }
+          weatherInMetricUnits.showFiveDayForecast(response[0], response[1]);
       }
     })
     .catch((error) => {
@@ -180,8 +199,9 @@ cityInput.addEventListener(
   },
   false,
 );
+unitToggler.addEventListener('click', selectDisplayUnit, false)
 
 //Start App with auto population of weather
-searchCityByNameOrZipcode('Tipton');
+// searchCityByNameOrZipcode('Tipton');
 
 export { throwSearchError }

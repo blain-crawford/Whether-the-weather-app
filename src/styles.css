@@ -59,8 +59,7 @@ html {
 }
 
 .chosen-unit {
-  border: 1px solid black;
-  border-radius: 100px;
+ font-weight: bold;
 }
 
 #search-error {

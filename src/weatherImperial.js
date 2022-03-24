@@ -2,7 +2,7 @@ import { key } from './key.js';
 import { throwSearchError } from './index.js';
 
 const weatherInImperialUnits = (() => {
-  const cityInput = document.querySelector('#city-input');
+  const cityInput = document.querySelector('#city-input');  
   const searchButton = document.querySelector('#search-button');
   const cityDisplay = document.querySelector('#city');
   const currentMinMax = document.querySelector('#current-min-max');
@@ -18,7 +18,8 @@ const weatherInImperialUnits = (() => {
   const chanceOfRainDisplays = document.querySelectorAll(
     '.chance-of-rain-display',
   );
-
+  
+ 
   const showAreaCurrentTemp = async (latitude, longitude) => {
     try {
       const tempResponse = await fetch(
