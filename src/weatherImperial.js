@@ -46,21 +46,35 @@ const weatherInImperialUnits = (() => {
           mode: 'cors',
         },
       )
-
-    const weatherConditionsInformation = await weatherConditionsResponse.json()
+      const weatherConditionsInformation = await weatherConditionsResponse.json()
     
-    for(let i = 0; i < weatherSymbols.length; i++) {
-      let expectedWeather = (weatherConditionsInformation.daily[i].weather[0].icon)
-      weatherSymbols[i].src = `http://openweathermap.org/img/wn/${expectedWeather}@2x.png`
-      console.log(weatherConditionsInformation.daily[i].weather[0].icon)
-      console.log(weatherSymbols[i]);
-    }
-    } catch (error) {
-      throwSearchError()
-      console.log(error)
-    }
+      // loop through weather symbols and make source API symbol
+      for(let i = 0; i < weatherSymbols.length; i++) {
+        let expectedWeather = (weatherConditionsInformation.daily[i].weather[0].icon)
+        weatherSymbols[i].src = `http://openweathermap.org/img/wn/${expectedWeather}@2x.png`
+      }
+      } catch (error) {
+        throwSearchError()
+        console.log(error)
+      }
   }
 
+  const populateForecastHumidity = async (latitude, longitude) => {
+    try {
+      let weatherConditionsResponse = await fetch(
+        `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=imperial`,
+        {
+          mode: 'cors',
+        },
+      )
+      const weatherConditionsInformation = await weatherConditionsResponse.json()
+      
+      
+      } catch (error) {
+        throwSearchError()
+        console.log(error)
+      }
+  }
   const populateForecastHighAndLow = async (latitude, longitude) => {
     try {
       const storedForecastHighsAndLows = {};
@@ -118,8 +132,9 @@ const weatherInImperialUnits = (() => {
         dateArray[j] = dayOfWeek.getDay();
       }
       populateForecastDays(dateArray);
-      populateForecastHighAndLow(latitude, longitude);
       populateForecastWeather(latitude, longitude);
+      populateForecastHighAndLow(latitude, longitude);
+      populateForecastHumidity(latitude, longitude);
     } catch (error) {
       throwSearchError();
       console.log(error);
