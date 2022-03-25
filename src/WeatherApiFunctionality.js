@@ -1,7 +1,7 @@
 import { key } from './key.js';
-import { throwSearchError } from './index.js';
+import { throwSearchError, unitsForSearch } from './index.js';
 
-const weatherInImperialUnits = (() => {
+const weatherInSearchedUnits = (() => {
   const cityInput = document.querySelector('#city-input');  
   const searchButton = document.querySelector('#search-button');
   const cityDisplay = document.querySelector('#city');
@@ -10,7 +10,7 @@ const weatherInImperialUnits = (() => {
   const currentWeatherIcon = document.querySelector('#current-weather-icon');
   const searchError = document.querySelector('#search-error');
   const forecastDays = document.querySelectorAll('.day-of-week');
-  const dayArray = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const dayArray = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   const lowTemps = document.querySelectorAll('.low-temp');
   const highTemps = document.querySelectorAll('.high-temp');
   const weatherSymbols = document.querySelectorAll('.expected-weather');
@@ -23,7 +23,7 @@ const weatherInImperialUnits = (() => {
   const showAreaCurrentTemp = async (latitude, longitude) => {
     try {
       const tempResponse = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}&units=imperial`,
+        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}&units=${unitsForSearch}`,
         {
           mode: 'cors',
         },
@@ -41,7 +41,7 @@ const weatherInImperialUnits = (() => {
   const showCurrentWeather = async (latitude, longitude) => {
     try {
       const currentWeatherResponse = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}&units=imperial`,
+        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}&units=${unitsForSearch}`,
         {
           mode: 'cors',
         },
@@ -56,8 +56,10 @@ const weatherInImperialUnits = (() => {
   }
 
   const populateForecastDays = (daysOfWeek) => {
+    // console.log(daysOfWeek);
     for (let i = 0; i < daysOfWeek.length; i++) {
       if (forecastDays[i]) {
+        // console.log(dayArray[daysOfWeek[i]])
         forecastDays[i].innerText = dayArray[daysOfWeek[i]];
       }
     }
@@ -66,7 +68,7 @@ const weatherInImperialUnits = (() => {
   const populateForecastWeather = async (latitude, longitude) => {
     try {
       let weatherConditionsResponse = await fetch(
-        `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=imperial`,
+        `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=${unitsForSearch}`,
         {
           mode: 'cors',
         },
@@ -91,7 +93,7 @@ const weatherInImperialUnits = (() => {
   const populateForecastHumidity = async (latitude, longitude) => {
     try {
       let humidityResponse = await fetch(
-        `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=imperial`,
+        `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=${unitsForSearch}`,
         {
           mode: 'cors',
         },
@@ -109,7 +111,7 @@ const weatherInImperialUnits = (() => {
   const populateForecastChanceOfRain = async (latitude, longitude) => {
     try {
       let chanceOfRainResponse = await fetch(
-        `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=imperial`,
+        `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=${unitsForSearch}`,
         {
           mode: 'cors',
         },
@@ -129,7 +131,7 @@ const weatherInImperialUnits = (() => {
     try {
       const storedForecastHighsAndLows = {};
       const weatherResponse = await fetch(
-        `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=imperial`,
+        `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=${unitsForSearch}`,
         {
           mode: 'cors',
         },
@@ -160,14 +162,14 @@ const weatherInImperialUnits = (() => {
   const showFiveDayForecast = async (latitude, longitude) => {
     try {
       const fiveDayForecastResponse = await fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${key}&units=imperial`,
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${key}&units=${unitsForSearch}`,
         {
           mode: 'cors',
         },
       );
       let dateArray = [];
       const fiveDayForecastInformation = await fiveDayForecastResponse.json();
-
+        // console.log(fiveDayForecastInformation);
       for (let i = 1; i < fiveDayForecastInformation.list.length; i++) {
         let currentDate = fiveDayForecastInformation.list[i].dt_txt.substring(
           0,
@@ -178,8 +180,10 @@ const weatherInImperialUnits = (() => {
         }
       }
       for (let j = 0; j < dateArray.length; j++) {
+        console.log(dateArray[j]);
         let dayOfWeek = new Date(dateArray[j]);
         dateArray[j] = dayOfWeek.getDay();
+        console.log(dateArray[j]);
       }
       populateForecastDays(dateArray);
       populateForecastWeather(latitude, longitude);
@@ -194,4 +198,4 @@ const weatherInImperialUnits = (() => {
   return { populateForecastDays, showFiveDayForecast, showAreaCurrentTemp, showCurrentWeather };
 })();
 
-export { weatherInImperialUnits };
+export { weatherInSearchedUnits };

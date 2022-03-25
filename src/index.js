@@ -2,7 +2,7 @@ import 'regenerator-runtime/runtime';
 import './styles.css';
 import { key } from './key.js';
 import{ weatherInSearchedUnits } from './WeatherApiFunctionality.js'
-import { weatherInMetricUnits } from './weatherMetric.js';
+
 
 const cityInput = document.querySelector('#city-input');
 const searchButton = document.querySelector('#search-button');
@@ -199,4 +199,4 @@ unitToggler.addEventListener('click', selectDisplayUnit, false)
 //Start App with auto population of weather
 // searchCityByNameOrZipcode('Tipton');
 
-export { throwSearchError }
+export { throwSearchError, unitsForSearch }
