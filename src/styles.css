@@ -25,6 +25,7 @@ html {
 
 #city-input {
   width: 30%;
+  margin-bottom: 5px;
 }
 
 #search-button-and-unit-selector {
