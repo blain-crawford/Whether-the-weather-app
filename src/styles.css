@@ -11,28 +11,20 @@ html {
   height: 100px;
   margin: 0 auto;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  /* flex-direction: column; */
-}
-
-#input-label-error {
-  width: 70%;
-  border: 1px solid black;
-  height: 100%;
-  display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
+  border: 1px solid black;
 }
 
 #city-input {
-  width: 80%;
+  width: 30%;
 }
 
 #search-button-and-unit-selector {
   display: flex;
-  width: 25%;
+  flex-direction: column;
+  width: 75%;
 }
 
 #current-day-display{
