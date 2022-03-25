@@ -122,3 +122,55 @@ html {
   gap: 5px;
 }
 
+#day-of-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 5px;
+  grid-row-gap: 10px;
+  margin: 20px auto 0 auto;
+  width: 100%;
+  background-color: #ebac9d;
+  border-radius: 20px;
+  }
+  
+  #sunrise { 
+    grid-area: 1 / 1 / 2 / 2; 
+    text-align: center;
+  }
+
+  #sunset { 
+    grid-area: 1 / 2 / 2 / 3; 
+    text-align: center;
+  }
+
+  #dewpoint { 
+    grid-area: 1 / 3 / 2 / 4; 
+    text-align: center;
+  }
+
+  #chance-of-rain-today { 
+    grid-area: 1 / 4 / 2 / 5; 
+    text-align: center;
+  }
+
+  #humidity { 
+    grid-area: 2 / 1 / 3 / 2; 
+    text-align: center;
+  }
+
+  #visibility { 
+    grid-area: 2 / 2 / 3 / 3; 
+    text-align: center;
+  }
+
+  #feels-like { 
+    grid-area: 2 / 3 / 3 / 4; 
+    text-align: center;
+  }
+
+  #uv-index { 
+    grid-area: 2 / 4 / 3 / 5; 
+    text-align: center;
+  }
+
