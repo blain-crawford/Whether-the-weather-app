@@ -52,10 +52,8 @@ const weatherInSearchedUnits = (() => {
   }
 
   const populateForecastDays = (daysOfWeek) => {
-    // console.log(daysOfWeek);
     for (let i = 0; i < daysOfWeek.length; i++) {
       if (forecastDays[i]) {
-        // console.log(dayArray[daysOfWeek[i]])
         forecastDays[i].innerText = dayArray[daysOfWeek[i]];
       }
     }
@@ -146,9 +144,9 @@ const weatherInSearchedUnits = (() => {
       //Add to divs in fiveday forecast
       for (let j = 0; j < lowTemps.length; j++) {
         lowTemps[j].innerText =
-          Math.floor(storedForecastHighsAndLows[`day${j}`].min) + '°F';
+          Math.floor(storedForecastHighsAndLows[`day${j}`].min) + '°';
         highTemps[j].innerText =
-          Math.floor(storedForecastHighsAndLows[`day${j}`].max) + '°F';
+          Math.floor(storedForecastHighsAndLows[`day${j}`].max) + '°';
       }
     } catch (error) {
       throwSearchError();
@@ -165,7 +163,7 @@ const weatherInSearchedUnits = (() => {
       );
       let dateArray = [];
       const fiveDayForecastInformation = await fiveDayForecastResponse.json();
-        // console.log(fiveDayForecastInformation);
+      
       for (let i = 1; i < fiveDayForecastInformation.list.length; i++) {
         let currentDate = fiveDayForecastInformation.list[i].dt_txt.substring(
           0,
@@ -176,10 +174,8 @@ const weatherInSearchedUnits = (() => {
         }
       }
       for (let j = 0; j < dateArray.length; j++) {
-        console.log(dateArray[j]);
         let dayOfWeek = new Date(dateArray[j]);
         dateArray[j] = dayOfWeek.getDay();
-        console.log(dateArray[j]);
       }
       populateForecastDays(dateArray);
       populateForecastWeather(latitude, longitude);

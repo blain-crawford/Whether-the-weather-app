@@ -2,6 +2,7 @@ import 'regenerator-runtime/runtime';
 import './styles.css';
 import { key } from './key.js';
 import{ weatherInSearchedUnits } from './WeatherApiFunctionality.js'
+import { metricsInSearchedResults, metricsInSearchedUnits } from './dayOfMetrics.js'
 
 
 const cityInput = document.querySelector('#city-input');
@@ -174,6 +175,7 @@ const searchCityByNameOrZipcode = (cityBeingSearched) => {
         clearSearchError();
         clearCityInput();
         weatherInSearchedUnits.showFiveDayForecast(response[0], response[1]);
+        metricsInSearchedUnits.populateDayOfMetrics(response[0], response[1]);
       } 
     })
     .catch((error) => {
