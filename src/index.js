@@ -11,19 +11,20 @@ const searchError = document.querySelector('#search-error');
 const imperialSelector = document.querySelector('#imperial');
 const metricSelector = document.querySelector('#metric');
 const unitToggler = document.querySelector('#unit-selector');
-let imperialUnits = true;
+let unitsForSearch = 'imperial';
 
 const selectDisplayUnit = () => {
-  if (imperialUnits) {
-    imperialUnits = false;
+  if (unitsForSearch === 'imperial') {
+    unitsForSearch = 'metric';
     metricSelector.classList.add('chosen-unit');
     imperialSelector.classList.remove('chosen-unit');
     
-  } else {
-    imperialUnits = true
+  } else if (unitsForSearch === 'metric') {
+    unitsForSearch = 'imperial'
     metricSelector.classList.remove('chosen-unit');
     imperialSelector.classList.add('chosen-unit');
   }
+
   if(cityDisplay.innerText !== '') {
     cityInput.value = cityDisplay.innerText
     searchCityByNameOrZipcode();
