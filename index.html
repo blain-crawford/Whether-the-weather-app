@@ -9,16 +9,17 @@
   </head>
   <body>
     <div id="city-search-form">
-      <div id="label-and-error-container">
-        <label for="city-input">Enter City or Zip</label>
-        <span id="search-error"></span>
+      <div id="input-label-error">
+        <div id="label-and-error-container">
+          <span id="search-error"></span>
+        </div>
+        <input
+          id="city-input"
+          type="text"
+          autocomplete="off"
+          placeholder="city, zipcode, or city, state"
+        />
       </div>
-      <input
-        id="city-input"
-        type="text"
-        autocomplete="off"
-        placeholder="city, zipcode, or city, state"
-      />
       <div id="search-button-and-unit-selector">
         <button id="search-button">Search</button>
         <div id="unit-selector">
