@@ -1,7 +1,7 @@
 import 'regenerator-runtime/runtime';
 import './styles.css';
 import { key } from './key.js';
-import{ weatherInImperialUnits } from './weatherImperial.js'
+import{ weatherInSearchedUnits } from './WeatherApiFunctionality.js'
 import { weatherInMetricUnits } from './weatherMetric.js';
 
 const cityInput = document.querySelector('#city-input');
@@ -168,19 +168,13 @@ const searchCityByNameOrZipcode = (cityBeingSearched) => {
     }
   })
     .then((response) => {
-      if (response && imperialUnits) {
-        weatherInImperialUnits.showAreaCurrentTemp(response[0], response[1]);
-        weatherInImperialUnits.showCurrentWeather(response[0], response[1]);
+      if (response) {
+        weatherInSearchedUnits.showAreaCurrentTemp(response[0], response[1]);
+        weatherInSearchedUnits.showCurrentWeather(response[0], response[1]);
         clearSearchError();
         clearCityInput();
-        weatherInImperialUnits.showFiveDayForecast(response[0], response[1]);
-      } else if (response && !imperialUnits) {
-          weatherInMetricUnits.showAreaCurrentTemp(response[0], response[1]);
-          weatherInMetricUnits.showCurrentWeather(response[0], response[1]);
-          clearSearchError();
-          clearCityInput();
-          weatherInMetricUnits.showFiveDayForecast(response[0], response[1]);
-      }
+        weatherInSearchedUnits.showFiveDayForecast(response[0], response[1]);
+      } 
     })
     .catch((error) => {
       throwSearchError();
