@@ -197,6 +197,9 @@ cityInput.addEventListener(
 unitToggler.addEventListener('click', selectDisplayUnit, false)
 
 //Start App with auto population of weather
-// searchCityByNameOrZipcode('Tipton');
+const AutoPopulatePage = (() => {
+  cityInput.value = 'Boston'
+  searchCityByNameOrZipcode()
+})()
 
 export { throwSearchError, unitsForSearch }

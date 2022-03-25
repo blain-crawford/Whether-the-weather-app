@@ -2,13 +2,9 @@ import { key } from './key.js';
 import { throwSearchError, unitsForSearch } from './index.js';
 
 const weatherInSearchedUnits = (() => {
-  const cityInput = document.querySelector('#city-input');  
-  const searchButton = document.querySelector('#search-button');
-  const cityDisplay = document.querySelector('#city');
   const currentMinMax = document.querySelector('#current-min-max');
   const currentTemp = document.querySelector('#current-temp');
   const currentWeatherIcon = document.querySelector('#current-weather-icon');
-  const searchError = document.querySelector('#search-error');
   const forecastDays = document.querySelectorAll('.day-of-week');
   const dayArray = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   const lowTemps = document.querySelectorAll('.low-temp');
