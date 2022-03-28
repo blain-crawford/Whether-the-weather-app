@@ -46,14 +46,15 @@ const weatherInSearchedUnits = (() => {
       const currentWeatherInformation = await currentWeatherResponse.json();
       currentWeatherIcon.src =  `http://openweathermap.org/img/wn/${currentWeatherInformation.weather[0].icon}@2x.png`
       
-      const weatherBackgroundGif = currentWeatherInformation.weather[0].description;
+      const weatherBackgroundGif = currentWeatherInformation.weather[0];
+      console.log(weatherBackgroundGif)
       
-      const weatherBackgroundResponse = await fetch(`https://api.giphy.com/v1/gifs/random?api_key=${gifKey}&tag=${weatherBackgroundGif}}`, {
+      const weatherBackgroundResponse = await fetch(`https://api.giphy.com/v1/gifs/?gif_id=cinemagraph-sunset-cloudy-lOkbL3MJnEtHi&api_key=${gifKey}}`, {
         mode: 'cors'
       })
       const weatherBackgroundInformation = await weatherBackgroundResponse.json();
-      const searchedBackgroundImage = (weatherBackgroundInformation.data.images.original.url);
-      console.log(searchedBackgroundImage);
+      // const searchedBackgroundImage = (weatherBackgroundInformation.data.images.original.url);
+      console.log('Here I am!!!!!!!!!!!!!!!', weatherBackgroundInformation);
       weatherBackground.style.cssText = `background-image: url(${searchedBackgroundImage});`
     } catch (error) {
       throwSearchError();
