@@ -5,7 +5,7 @@ html {
   padding: 5px;
   margin: 0 auto;
   box-sizing: border-box;
-  background-color: blanchedalmond;
+  background-color: rgb(80, 168, 226);
 }
 
 #city-search-form {
@@ -15,7 +15,7 @@ html {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #ebac9d;
+  background-color: rgba(214, 218, 241, 0.24);
   border-radius: 20px;
 }
 
@@ -88,7 +88,8 @@ html {
   justify-content: space-evenly;
   margin: 0 auto;
   border-radius: 20px;
-  background-color: #ebac9d;
+  background-color: rgba(214, 218, 241, 0.24);
+  box-shadow: ;
 }
 
 #forecast-header {
@@ -145,7 +146,7 @@ html {
   grid-row-gap: 10px;
   margin: 20px auto 0 auto;
   width: 100%;
-  background-color: #ebac9d;
+  background-color: rgba(214, 218, 241, 0.24);
   border-radius: 20px;
   }
   
@@ -189,3 +190,8 @@ html {
     text-align: center;
   }
 
+@media only screen and (max-width: 650px) {
+  body {
+    background-color: lightblue;
+  }
+}
