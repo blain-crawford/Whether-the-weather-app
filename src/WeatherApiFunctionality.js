@@ -3,6 +3,7 @@ import { throwSearchError, unitsForSearch } from './index.js';
 
 const weatherInSearchedUnits = (() => {
   const currentMinMax = document.querySelector('#current-min-max');
+  const weatherBackground = document.querySelector('#current-day-display');
   const currentTemp = document.querySelector('#current-temp');
   const currentWeatherIcon = document.querySelector('#current-weather-icon');
   const forecastDays = document.querySelectorAll('.day-of-week');
@@ -45,9 +46,18 @@ const weatherInSearchedUnits = (() => {
       const currentWeatherInformation = await currentWeatherResponse.json();
       currentWeatherIcon.src =  `http://openweathermap.org/img/wn/${currentWeatherInformation.weather[0].icon}@2x.png`
       
-      const weatherGif = await fetch (`api.giphy.com/v1/gifs/{gif_id}&api_key=${gifKey}`)
+      const weatherBackgroundGif = currentWeatherInformation.weather[0].description;
+      
+      const weatherBackgroundResponse = await fetch(`https://api.giphy.com/v1/gifs/random?api_key=${gifKey}&tag=${weatherBackgroundGif}}`, {
+        mode: 'cors'
+      })
+      const weatherBackgroundInformation = await weatherBackgroundResponse.json();
+      const searchedBackgroundImage = (weatherBackgroundInformation.data.images.original.url);
+      console.log(searchedBackgroundImage);
+      weatherBackground.style.cssText = `background-image: url(${searchedBackgroundImage});`
     } catch (error) {
       throwSearchError();
+      console.log(error)
     }
   }
 

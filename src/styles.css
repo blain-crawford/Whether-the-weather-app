@@ -55,7 +55,8 @@ html {
   border-radius: 20px;
   display: flex;
   justify-content: center;
-  border: 1px solid black;
+  background-position: center;
+  background-size: cover;
 }
 
 .temp-min-max {
