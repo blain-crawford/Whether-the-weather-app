@@ -10,6 +10,20 @@ const metricsInSearchedUnits = (() => {
   const visibility = document.querySelector('#visibility-metric');
   const feelsLike = document.querySelector('#feels-like-metric');
   const uvIndex = document.querySelector('#uv-index-metric');
+  const uvIndexChart = {
+    0: 'low',
+    1: 'Low',
+    2: 'Low',
+    3: 'Medium',
+    4: 'Medium',
+    5: 'Medium',
+    6: 'High',
+    7: 'High',
+    8: 'High',
+    9: 'Very High',
+    10: 'Very High',
+    11: 'Extreme'
+  }
 
   const getSunriseMetric = async (latitude, longitude) => {
     try {
@@ -147,6 +161,24 @@ const metricsInSearchedUnits = (() => {
     }
   }
 
+  const getUvIndex = async (latitude, longitude) => {
+    try {
+      const UvIndexResponse = await fetch(
+        `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=${unitsForSearch}`,
+        {
+          mode: 'cors',
+        }
+      );
+      const uvIndexInformation = await UvIndexResponse.json();
+      return(`${uvIndexInformation.current.uvi} : ${uvIndexChart[Math.floor(uvIndexInformation.current.uvi)]}`);
+
+    } catch (error) {
+      throwSearchError();
+      console.log(error)
+    }
+
+  }
+
   const populateDayOfMetrics = async (latitude, longitude) => {
     try {
       // Populate Sunrise
@@ -176,6 +208,10 @@ const metricsInSearchedUnits = (() => {
       // Populate Feels Like
       const currentFeltTemp = await getWhatTempFeelsLike(latitude, longitude);
       feelsLike.innerText = currentFeltTemp;
+
+      // Populate Uv Index
+      const currentUvIndex = await getUvIndex(latitude, longitude);
+      uvIndex.innerText = currentUvIndex;
     } catch (error) {
       throwSearchError()
       console.log(error);
