@@ -1,4 +1,4 @@
-import { key } from './key.js';
+import { key, gifKey } from './key.js';
 import { throwSearchError, unitsForSearch } from './index.js';
 
 const weatherInSearchedUnits = (() => {
@@ -42,10 +42,10 @@ const weatherInSearchedUnits = (() => {
           mode: 'cors',
         },
       );
-
       const currentWeatherInformation = await currentWeatherResponse.json();
       currentWeatherIcon.src =  `http://openweathermap.org/img/wn/${currentWeatherInformation.weather[0].icon}@2x.png`
-     
+      
+      const weatherGif = await fetch (`api.giphy.com/v1/gifs/{gif_id}&api_key=${gifKey}`)
     } catch (error) {
       throwSearchError();
     }

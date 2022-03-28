@@ -5,7 +5,7 @@ html {
   padding: 5px;
   margin: 0 auto;
   box-sizing: border-box;
-  background-color: rgb(80, 168, 226);
+  background-color: rgb(75, 174, 240);
 }
 
 #city-search-form {
@@ -55,6 +55,7 @@ html {
   border-radius: 20px;
   display: flex;
   justify-content: center;
+  border: 1px solid black;
 }
 
 .temp-min-max {
@@ -101,6 +102,26 @@ html {
 #forecast-header h4 {
   padding: 12px;
   margin: 0;
+}
+
+#weather-label {
+  position: relative;
+  right: 5px;
+}
+
+#humidity-label {
+  position: relative;
+  left: 15px;
+}
+
+#rain-label {
+  position: relative;
+  right: 10px;
+}
+
+#temp-label {
+  position: relative;
+  right: 5px;
 }
 
 .forecast {
@@ -299,4 +320,26 @@ html {
     #uv-index { 
       grid-area: 4 / 2 / 5 / 3;
     }
+}
+
+@media (max-width: 1100px) {
+  #weather-label {
+    position: relative;
+    right: 5px;
+  }
+  
+  #humidity-label {
+    position: relative;
+    left: 15px;
+  }
+  
+  #rain-label {
+    position: relative;
+    right: 10px;
+  }
+  
+  #temp-label {
+    position: relative;
+    right: 5px;
+  }
 }
