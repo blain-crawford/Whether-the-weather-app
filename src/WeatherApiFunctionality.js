@@ -115,7 +115,7 @@ const weatherInSearchedUnits = (() => {
       // Loop through chance of rain perday and populate it into forecast
       for (let i = 0; i < chanceOfRainDisplays.length; i++) {
         chanceOfRainDisplays[i].innerText =
-          chanceOfRainInformation.daily[i].pop * 100 + '%';
+          Math.round(chanceOfRainInformation.daily[i].pop * 100) + '%';
       }
     } catch (error) {
       throwSearchError();
