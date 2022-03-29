@@ -175,6 +175,7 @@ const weatherInSearchedUnits = (() => {
       populateForecastHumidity(forecastInformation);
       populateForecastChanceOfRain(forecastInformation);
       populateForecastHighAndLow(forecastInformation);
+      
     } catch (error) {
       throwSearchError();
     }
