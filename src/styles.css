@@ -12,6 +12,11 @@ html {
   font-family: main-font;
 }
 
+.light-blue {
+  -webkit-box-shadow: 1px -3px 8px 5px rgba(255,255,255,0.29); 
+  box-shadow: 1px -3px 25px 2px rgba(255,255,255,0.29);
+}
+
 #city-search-form {
   height: 100px;
   margin: 0 auto;
@@ -30,6 +35,8 @@ html {
 #city-input {
   width: 30%;
   margin-bottom: 1px;
+  border: 2px solid rgb(75, 174, 240);
+  border-radius: 5px;
 }
 
 #search-button-and-unit-selector {
@@ -84,8 +91,8 @@ html {
 }
 
 #search-error {
-  color: red;
-  font-size: 15px;
+  color: rgb(255, 72, 0);
+  font-size: 20px;
 }
 
 #five-day-forecast {
@@ -173,6 +180,10 @@ html {
   width: 100%;
   background-color: rgba(214, 218, 241, 0.24);
   border-radius: 20px;
+  }
+
+  #day-of-metrics p {
+    margin: 5px auto 10px auto;
   }
   
   #sunrise { 
@@ -287,11 +298,12 @@ html {
     }
 
     #day-of-metrics h2 {
-      font-size: 15px;
+      font-size: 12px;
+      
     }
     
-    #day-of-metrics P {
-      font-size: 100px;
+    #day-of-metrics p {
+      font-size: 12px;
     }
 
     #sunrise { 
