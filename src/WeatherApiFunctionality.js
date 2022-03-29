@@ -16,23 +16,29 @@ const weatherInSearchedUnits = (() => {
     '.chance-of-rain-display',
   );
   
-  const retirieveWeatherInformation = async (latitude, longitude) => {
+  const retrieveWeatherInformation = async (latitude, longitude) => {
     try {
-      const openWeatherRepsonse = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}&units=${unitsForSearch}`, {
-        mode: 'cors'
-      })
-      const openWeatherInformation = await openWeatherRepsonse.json();
-      return openWeatherInformation;
-
+      // const openWeatherRepsonse = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=${unitsForSearch}`, {
+      //   mode: 'cors'
+      // })
+      // const openWeatherInformation = await openWeatherRepsonse.json();
+      // return openWeatherInformation;
+      console.log(latitude, longitude)
     } catch (error) {
       throwSearchError();
       console.log(error)
     }
   }
-  const showAreaCurrentTemp = async (latitude, longitude) => {
-    try {
 
-      const tempInformation = await retirieveWeatherInformation();
+  const showAreaCurrentTemp = async () => {
+    try {
+      const tempResponse = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}&units=${unitsForSearch}`,
+        {
+          mode: 'cors',
+        },
+      );
+      const tempInformation = await tempResponse.json();
       currentTemp.innerText = `${Math.floor(tempInformation.main.temp)}°`;
       currentMinMax.innerText = `${Math.floor(tempInformation.main.temp_min)}°/${Math.floor(tempInformation.main.temp_max)}°`
       
@@ -52,16 +58,16 @@ const weatherInSearchedUnits = (() => {
       const currentWeatherInformation = await currentWeatherResponse.json();
       currentWeatherIcon.src =  `http://openweathermap.org/img/wn/${currentWeatherInformation.weather[0].icon}@2x.png`
       
-      const weatherBackgroundGif = currentWeatherInformation.weather[0];
-      console.log(weatherBackgroundGif)
+      // const weatherBackgroundGif = currentWeatherInformation.weather[0];
+      // console.log(weatherBackgroundGif)
       
-      const weatherBackgroundResponse = await fetch(`https://api.giphy.com/v1/gifs/?gif_id=cinemagraph-sunset-cloudy-lOkbL3MJnEtHi&api_key=${gifKey}}`, {
-        mode: 'cors'
-      })
-      const weatherBackgroundInformation = await weatherBackgroundResponse.json();
-      // const searchedBackgroundImage = (weatherBackgroundInformation.data.images.original.url);
-      console.log('Here I am!!!!!!!!!!!!!!!', weatherBackgroundInformation);
-      weatherBackground.style.cssText = `background-image: url(${searchedBackgroundImage});`
+      // const weatherBackgroundResponse = await fetch(`https://api.giphy.com/v1/gifs/?gif_id=cinemagraph-sunset-cloudy-lOkbL3MJnEtHi&api_key=${gifKey}}`, {
+      //   mode: 'cors'
+      // })
+      // const weatherBackgroundInformation = await weatherBackgroundResponse.json();
+      // // const searchedBackgroundImage = (weatherBackgroundInformation.data.images.original.url);
+      // console.log('Here I am!!!!!!!!!!!!!!!', weatherBackgroundInformation);
+      // weatherBackground.style.cssText = `background-image: url(${searchedBackgroundImage});`
     } catch (error) {
       throwSearchError();
       console.log(error)
@@ -195,6 +201,7 @@ const weatherInSearchedUnits = (() => {
         dateArray[j] = dayOfWeek.getDay();
       }
       populateForecastDays(dateArray);
+      // retrieveWeatherInformation(latitude, longitude);
       populateForecastWeather(latitude, longitude);
       populateForecastHumidity(latitude, longitude);
       populateForecastChanceOfRain(latitude, longitude);
@@ -204,7 +211,7 @@ const weatherInSearchedUnits = (() => {
     }
   };
 
-  return { populateForecastDays, showFiveDayForecast, showAreaCurrentTemp, showCurrentWeather };
+  return { populateForecastDays, showFiveDayForecast, showAreaCurrentTemp, showCurrentWeather, retrieveWeatherInformation };
 })();
 
 export { weatherInSearchedUnits };
