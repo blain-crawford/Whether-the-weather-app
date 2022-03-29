@@ -14,7 +14,13 @@ const weatherInSearchedUnits = (() => {
   const chanceOfRainDisplays = document.querySelectorAll(
     '.chance-of-rain-display',
   );
-
+  
+  /**
+   * takes info provided from fivedayforecast fetch and returns for use of forecast functions
+   * @param {*} latitude 
+   * @param {*} longitude 
+   * @returns api promise parsed into JSON format
+   */
   const retrieveWeatherInformationForForecast = async (latitude, longitude) => {
     try {
       const openWeatherRepsonse = await fetch(
@@ -32,6 +38,12 @@ const weatherInSearchedUnits = (() => {
     }
   };
 
+  /**
+   * takes info from searched city and uses it to populate current day weather/temp
+   * @param {*} latitude 
+   * @param {*} longitude 
+   * @returns api promise in json format
+   */
   const retrieveWeatherInformationForToday = async (latitude, longitude) => {
     try {
       const todayWeatherResponse = await fetch(
@@ -48,6 +60,10 @@ const weatherInSearchedUnits = (() => {
     }
   }
 
+  /**
+   * uses retrieveWeatherInformationForToday to get temp info
+   * @param {*} tempInformation 
+   */
   const showAreaCurrentTemp = async (tempInformation) => {
     try {
       currentTemp.innerText = `${Math.floor(tempInformation.main.temp)}°`;
@@ -59,6 +75,10 @@ const weatherInSearchedUnits = (() => {
     }
   };
 
+  /**
+   * uses retrieveWeatherInformationForToday to weather info
+   * @param {*} currentWeatherInformation 
+   */
   const showCurrentWeather = async (currentWeatherInformation) => {
     try {
       currentWeatherIcon.src = `http://openweathermap.org/img/wn/${currentWeatherInformation.weather[0].icon}@2x.png`;
@@ -137,6 +157,12 @@ const weatherInSearchedUnits = (() => {
     }
   };
 
+  /**
+   * gets latitude and longitude from city search and 
+   * uses it to give info to above functions to populate 5 day forecast
+   * @param {*} latitude 
+   * @param {*} longitude 
+   */
   const showFiveDayForecast = async (latitude, longitude) => {
     try {
       //Getting information to populate array for displaying day names in forecast
