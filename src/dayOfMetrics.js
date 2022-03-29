@@ -25,15 +25,24 @@ const metricsInSearchedUnits = (() => {
     11: 'Extreme'
   }
 
-  const getSunriseMetric = async (latitude, longitude) => {
+  const getDayOfMetrics = async (latitude, longitude) => {
     try {
-      let sunriseResponse = await fetch(
+      let metricsResponse = await fetch(
         `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=${unitsForSearch}`,
         {
           mode: 'cors',
         }
       );
-        const sunriseInformation = await sunriseResponse.json();
+        const metricsInformation = await metricsResponse.json();
+        return metricsInformation;
+    } catch (error) {
+      throwSearchError();
+      console.log(error);
+    }
+  }
+
+  const getSunriseMetric = async (sunriseInformation) => {
+    try {
         const dayToCheck = new Date(sunriseInformation.current.sunrise * 1000);
         const sunriseHour = dayToCheck.getHours();
         let sunriseMinutes = dayToCheck.getMinutes();
@@ -50,15 +59,8 @@ const metricsInSearchedUnits = (() => {
       console.log(error);
     }
   }
-  const getSunsetMetric = async (latitude, longitude) => {
+  const getSunsetMetric = async (sunsetInformation) => {
     try {
-      let sunsetResponse = await fetch(
-        `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=${unitsForSearch}`,
-        {
-          mode: 'cors',
-        }
-      );
-        const sunsetInformation = await sunsetResponse.json();
         const dayToCheck = new Date(sunsetInformation.current.sunset * 1000);
         const sunsetHour = dayToCheck.getHours();
         
@@ -75,30 +77,16 @@ const metricsInSearchedUnits = (() => {
     }
   }
 
-  const getdewPointMetric = async (latitude, longitude) => {
+  const getdewPointMetric = async (dewPointInformation) => {
     try {
-      const dewPointResponse = await fetch(
-        `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=${unitsForSearch}`,
-        {
-          mode: 'cors',
-        }
-      );
-      const dewPointInformation = await dewPointResponse.json();
       return Math.floor(dewPointInformation.current.dew_point);
     } catch (error) {
       throwSearchError()
     }
   }
 
-  const getChanceOfRain = async (latitude, longitude) => {
+  const getChanceOfRain = async (chanceOfRainInformation) => {
     try {
-      const chanceOfRainResponse = await fetch(
-        `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=${unitsForSearch}`,
-        {
-          mode: 'cors',
-        }
-      );
-      const chanceOfRainInformation = await chanceOfRainResponse.json();
       return `${chanceOfRainInformation.daily[0].pop * 100}%`;
     } catch (error) {
       throwSearchError()
@@ -106,16 +94,8 @@ const metricsInSearchedUnits = (() => {
     }
   }
 
-  const getHumidity = async (latitude, longitude) => {
+  const getHumidity = async (humidityInformation) => {
     try {
-      const humidityResponse = await fetch(
-        `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=${unitsForSearch}`,
-        {
-          mode: 'cors',
-        }
-      );
-      const humidityInformation = await humidityResponse.json()
-      
       return `${humidityInformation.current.humidity}%`;
     } catch (error) {
       throwSearchError()
@@ -123,16 +103,8 @@ const metricsInSearchedUnits = (() => {
     }
   }
 
-  const getVisibility = async (latitude, longitude) => {
+  const getVisibility = async (visibilityInformation) => {
     try{
-      const visibilityResponse = await fetch(
-        `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=${unitsForSearch}`,
-        {
-          mode: 'cors',
-        }
-      );
-      const visibilityInformation = await visibilityResponse.json();
-
       if(unitsForSearch === 'metric') {
         return `${visibilityInformation.current.visibility / 1000}Km`
       } else if (unitsForSearch === 'imperial') {
@@ -145,15 +117,8 @@ const metricsInSearchedUnits = (() => {
     }
   }
 
-  const getWhatTempFeelsLike = async (latitude, longitude) => {
+  const getWhatTempFeelsLike = async (feelsLikeInformation) => {
     try {
-      const feelsLikeResponse = await fetch(
-        `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=${unitsForSearch}`,
-        {
-          mode: 'cors',
-        }
-      );
-      const feelsLikeInformation = await feelsLikeResponse.json();
       return `${feelsLikeInformation.current.feels_like}°`
     } catch (error) {
       throwSearchError()
@@ -161,17 +126,9 @@ const metricsInSearchedUnits = (() => {
     }
   }
 
-  const getUvIndex = async (latitude, longitude) => {
+  const getUvIndex = async (uvIndexInformation) => {
     try {
-      const UvIndexResponse = await fetch(
-        `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=${unitsForSearch}`,
-        {
-          mode: 'cors',
-        }
-      );
-      const uvIndexInformation = await UvIndexResponse.json();
       return(`${uvIndexInformation.current.uvi} : ${uvIndexChart[Math.floor(uvIndexInformation.current.uvi)]}`);
-
     } catch (error) {
       throwSearchError();
       console.log(error)
@@ -181,36 +138,39 @@ const metricsInSearchedUnits = (() => {
 
   const populateDayOfMetrics = async (latitude, longitude) => {
     try {
+      // Get Metrics info from API
+      const searchedMetrics = await getDayOfMetrics(latitude, longitude)
+
       // Populate Sunrise
-      const sunriseTime = await getSunriseMetric(latitude, longitude);
+      const sunriseTime = await getSunriseMetric(searchedMetrics);
       sunrise.innerText = sunriseTime;
 
       // Populate Sunset
-      const sunsetTime = await getSunsetMetric(latitude, longitude);
+      const sunsetTime = await getSunsetMetric(searchedMetrics);
       sunset.innerText = sunsetTime;
 
       //Populate Dewpoint
-      const dewPointTemp = await getdewPointMetric(latitude, longitude);
+      const dewPointTemp = await getdewPointMetric(searchedMetrics);
       dewPoint.innerText = `${dewPointTemp}°`;
 
       //Populate Chance of Rain
-      const chanceOfRainPercentage = await getChanceOfRain(latitude, longitude);
+      const chanceOfRainPercentage = await getChanceOfRain(searchedMetrics);
       chanceOfRainToday.innerText = chanceOfRainPercentage;
 
       //Populate Humidity
-      const humidityPercentage = await getHumidity(latitude, longitude);
+      const humidityPercentage = await getHumidity(searchedMetrics);
       humidity.innerText = humidityPercentage;
 
       // Populate Visibility Km or miles
-      const currentVisibility = await getVisibility(latitude, longitude)
+      const currentVisibility = await getVisibility(searchedMetrics)
       visibility.innerText = currentVisibility;
 
       // Populate Feels Like
-      const currentFeltTemp = await getWhatTempFeelsLike(latitude, longitude);
+      const currentFeltTemp = await getWhatTempFeelsLike(searchedMetrics);
       feelsLike.innerText = currentFeltTemp;
 
       // Populate Uv Index
-      const currentUvIndex = await getUvIndex(latitude, longitude);
+      const currentUvIndex = await getUvIndex(searchedMetrics);
       uvIndex.innerText = currentUvIndex;
     } catch (error) {
       throwSearchError()
