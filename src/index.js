@@ -170,7 +170,7 @@ const searchCityByNameOrZipcode = (cityBeingSearched) => {
   })
     .then((response) => {
       if (response) {
-        weatherInSearchedUnits.retrieveWeatherInformation(response[0], response[1])
+        // weatherInSearchedUnits.retrieveWeatherInformationForForecast(response[0], response[1])
         weatherInSearchedUnits.showAreaCurrentTemp(response[0], response[1]);
         weatherInSearchedUnits.showCurrentWeather(response[0], response[1]);
         clearSearchError();

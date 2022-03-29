@@ -16,21 +16,21 @@ const weatherInSearchedUnits = (() => {
     '.chance-of-rain-display',
   );
   
-  const retrieveWeatherInformation = async (latitude, longitude) => {
+  const retrieveWeatherInformationForForecast = async (latitude, longitude) => {
     try {
-      // const openWeatherRepsonse = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=${unitsForSearch}`, {
-      //   mode: 'cors'
-      // })
-      // const openWeatherInformation = await openWeatherRepsonse.json();
-      // return openWeatherInformation;
+      const openWeatherRepsonse = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=${unitsForSearch}`, {
+        mode: 'cors'
+      })
+      const openWeatherInformation = await openWeatherRepsonse.json();
       console.log(latitude, longitude)
+      return openWeatherInformation;
     } catch (error) {
       throwSearchError();
       console.log(error)
     }
   }
 
-  const showAreaCurrentTemp = async () => {
+  const showAreaCurrentTemp = async (latitude, longitude) => {
     try {
       const tempResponse = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}&units=${unitsForSearch}`,
@@ -39,6 +39,7 @@ const weatherInSearchedUnits = (() => {
         },
       );
       const tempInformation = await tempResponse.json();
+      
       currentTemp.innerText = `${Math.floor(tempInformation.main.temp)}°`;
       currentMinMax.innerText = `${Math.floor(tempInformation.main.temp_min)}°/${Math.floor(tempInformation.main.temp_max)}°`
       
@@ -84,14 +85,15 @@ const weatherInSearchedUnits = (() => {
 
   const populateForecastWeather = async (latitude, longitude) => {
     try {
-      let weatherConditionsResponse = await fetch(
-        `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=${unitsForSearch}`,
-        {
-          mode: 'cors',
-        },
-      );
-      const weatherConditionsInformation =
-        await weatherConditionsResponse.json();
+      // let weatherConditionsResponse = await fetch(
+      //   `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=${unitsForSearch}`,
+      //   {
+      //     mode: 'cors',
+      //   },
+      // );
+      // const weatherConditionsInformation =
+      //   await weatherConditionsResponse.json();
+      const weatherConditionsInformation = await retrieveWeatherInformationForForecast(latitude, longitude)
 
       // loop through weather symbols and make source API symbol
       for (let i = 0; i < weatherSymbols.length; i++) {
@@ -201,7 +203,7 @@ const weatherInSearchedUnits = (() => {
         dateArray[j] = dayOfWeek.getDay();
       }
       populateForecastDays(dateArray);
-      // retrieveWeatherInformation(latitude, longitude);
+      retrieveWeatherInformationForForecast(latitude, longitude);
       populateForecastWeather(latitude, longitude);
       populateForecastHumidity(latitude, longitude);
       populateForecastChanceOfRain(latitude, longitude);
@@ -211,7 +213,7 @@ const weatherInSearchedUnits = (() => {
     }
   };
 
-  return { populateForecastDays, showFiveDayForecast, showAreaCurrentTemp, showCurrentWeather, retrieveWeatherInformation };
+  return { populateForecastDays, showFiveDayForecast, showAreaCurrentTemp, showCurrentWeather, retrieveWeatherInformationForForecast };
 })();
 
 export { weatherInSearchedUnits };
