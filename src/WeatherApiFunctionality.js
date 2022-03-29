@@ -32,16 +32,24 @@ const weatherInSearchedUnits = (() => {
     }
   };
 
-  const showAreaCurrentTemp = async (latitude, longitude) => {
+  const retrieveWeatherInformationForToday = async (latitude, longitude) => {
     try {
-      const tempResponse = await fetch(
+      const todayWeatherResponse = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}&units=${unitsForSearch}`,
         {
           mode: 'cors',
         },
       );
-      const tempInformation = await tempResponse.json();
+      const todayWeatherInformation = await todayWeatherResponse.json();
+      return todayWeatherInformation
+    } catch (error) {
+      throwSearchError();
+      console.log(error)
+    }
+  }
 
+  const showAreaCurrentTemp = async (tempInformation) => {
+    try {
       currentTemp.innerText = `${Math.floor(tempInformation.main.temp)}°`;
       currentMinMax.innerText = `${Math.floor(
         tempInformation.main.temp_min,
@@ -51,15 +59,8 @@ const weatherInSearchedUnits = (() => {
     }
   };
 
-  const showCurrentWeather = async (latitude, longitude) => {
+  const showCurrentWeather = async (currentWeatherInformation) => {
     try {
-      const currentWeatherResponse = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}&units=${unitsForSearch}`,
-        {
-          mode: 'cors',
-        },
-      );
-      const currentWeatherInformation = await currentWeatherResponse.json();
       currentWeatherIcon.src = `http://openweathermap.org/img/wn/${currentWeatherInformation.weather[0].icon}@2x.png`;
     } catch (error) {
       throwSearchError();
@@ -175,7 +176,7 @@ const weatherInSearchedUnits = (() => {
       populateForecastHumidity(forecastInformation);
       populateForecastChanceOfRain(forecastInformation);
       populateForecastHighAndLow(forecastInformation);
-      
+
     } catch (error) {
       throwSearchError();
     }
@@ -186,6 +187,7 @@ const weatherInSearchedUnits = (() => {
     showFiveDayForecast,
     showAreaCurrentTemp,
     showCurrentWeather,
+    retrieveWeatherInformationForToday
   };
 })();
 

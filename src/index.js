@@ -168,11 +168,16 @@ const searchCityByNameOrZipcode = (cityBeingSearched) => {
       resolve(searchName(cityBeingSearched));
     }
   })
-    .then((response) => {
+    .then( async (response) => {
       if (response) {
-        // weatherInSearchedUnits.retrieveWeatherInformationForForecast(response[0], response[1])
-        weatherInSearchedUnits.showAreaCurrentTemp(response[0], response[1]);
-        weatherInSearchedUnits.showCurrentWeather(response[0], response[1]);
+        // Send API Fetch for current day weather information
+        const currentWeatherInformation = await weatherInSearchedUnits.retrieveWeatherInformationForToday(
+          response[0], 
+          response[1]
+        )
+        
+        weatherInSearchedUnits.showAreaCurrentTemp(currentWeatherInformation);
+        weatherInSearchedUnits.showCurrentWeather(currentWeatherInformation);
         clearSearchError();
         clearCityInput();
         weatherInSearchedUnits.showFiveDayForecast(response[0], response[1]);
