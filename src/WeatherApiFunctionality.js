@@ -16,17 +16,23 @@ const weatherInSearchedUnits = (() => {
     '.chance-of-rain-display',
   );
   
- 
+  const retirieveWeatherInformation = async (latitude, longitude) => {
+    try {
+      const openWeatherRepsonse = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}&units=${unitsForSearch}`, {
+        mode: 'cors'
+      })
+      const openWeatherInformation = await openWeatherRepsonse.json();
+      return openWeatherInformation;
+
+    } catch (error) {
+      throwSearchError();
+      console.log(error)
+    }
+  }
   const showAreaCurrentTemp = async (latitude, longitude) => {
     try {
-      const tempResponse = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}&units=${unitsForSearch}`,
-        {
-          mode: 'cors',
-        },
-      );
 
-      const tempInformation = await tempResponse.json();
+      const tempInformation = await retirieveWeatherInformation();
       currentTemp.innerText = `${Math.floor(tempInformation.main.temp)}°`;
       currentMinMax.innerText = `${Math.floor(tempInformation.main.temp_min)}°/${Math.floor(tempInformation.main.temp_max)}°`
       
