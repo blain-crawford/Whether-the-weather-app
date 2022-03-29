@@ -1,4 +1,7 @@
-
+@font-face {
+  font-family: main-font;
+  src: url(./fonts/LiberationSans-Regular.ttf);
+}
 body,
 html {
   width: 100%;
@@ -6,6 +9,7 @@ html {
   margin: 0 auto;
   box-sizing: border-box;
   background-color: rgb(75, 174, 240);
+  font-family: main-font;
 }
 
 #city-search-form {
@@ -287,7 +291,7 @@ html {
     }
     
     #day-of-metrics P {
-      font-size: 10px;
+      font-size: 100px;
     }
 
     #sunrise { 
@@ -322,6 +326,20 @@ html {
       grid-area: 4 / 2 / 5 / 3;
     }
 }
+
+.metric-label {
+  font-size: 18px;
+  margin: 10px auto 0px auto;
+}
+
+.label-underline {
+  border: 1px solid black;
+  width: 60%;
+  margin: 0 auto;
+  opacity: .2;
+}
+
+
 
 @media (max-width: 1100px) {
   #weather-label {
