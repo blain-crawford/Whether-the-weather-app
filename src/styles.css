@@ -2,6 +2,13 @@
   font-family: main-font;
   src: url(./fonts/LiberationSans-Regular.ttf);
 }
+
+@font-face {
+  font-family: chosen-unit;
+  src: url(./fonts/LiberationSans-Bold.ttf);
+}
+
+/* General styling for full page */
 body,
 html {
   width: 100%;
@@ -17,6 +24,7 @@ html {
   box-shadow: 1px -3px 25px 2px rgba(255,255,255,0.29);
 }
 
+/* Page header styling */
 #city-search-form {
   height: 100px;
   margin: 0 auto;
@@ -30,6 +38,12 @@ html {
 
 #city-search-form h2 {
   margin: 0;
+}
+
+
+#search-error {
+  color: rgb(255, 72, 0);
+  font-size: 20px;
 }
 
 #city-input {
@@ -61,6 +75,7 @@ html {
   cursor: pointer;
 }
 
+/* Second Element display for current temp */
 #current-day-display{
   margin: 20px auto;
   border-radius: 20px;
@@ -87,14 +102,10 @@ html {
 }
 
 .chosen-unit {
- font-weight: bold;
+ font-family: chosen-unit;
 }
 
-#search-error {
-  color: rgb(255, 72, 0);
-  font-size: 20px;
-}
-
+/* styling for full five day forecast section */
 #five-day-forecast {
   display: flex;
   flex-direction: column;
@@ -104,6 +115,7 @@ html {
   background-color: rgba(214, 218, 241, 0.24);
 }
 
+/* styling for label section of forecast */
 #forecast-header {
   display: flex;
   align-items: center;
@@ -136,6 +148,7 @@ html {
   right: 5px;
 }
 
+/* Styling for individual forecasts */
 .forecast {
   display: flex;
   align-items: center;
@@ -169,6 +182,8 @@ html {
   font-size: 15px;
   gap: 5px;
 }
+
+/* styling for day of metrics section */
 
 #day-of-metrics {
   display: grid;
@@ -226,6 +241,7 @@ html {
     text-align: center;
   }
 
+/* Styling to fit sections to different screen sizes */
 @media (max-width: 650px) {
   #city-search-form {
     height: 100px;
