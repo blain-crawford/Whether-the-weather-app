@@ -22,8 +22,8 @@ const metricsInSearchedUnits = (() => {
     8: 'High',
     9: 'Very High',
     10: 'Very High',
-    11: 'Extreme'
-  }
+    11: 'Extreme',
+  };
 
   const getDayOfMetrics = async (latitude, longitude) => {
     try {
@@ -31,115 +31,116 @@ const metricsInSearchedUnits = (() => {
         `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${key}&units=${unitsForSearch}`,
         {
           mode: 'cors',
-        }
+        },
       );
-        const metricsInformation = await metricsResponse.json();
-        return metricsInformation;
+      const metricsInformation = await metricsResponse.json();
+      return metricsInformation;
     } catch (error) {
       throwSearchError();
-      console.log(error);
     }
-  }
+  };
 
   const getSunriseMetric = async (sunriseInformation) => {
     try {
-        const dayToCheck = new Date(sunriseInformation.current.sunrise * 1000);
-        const sunriseHour = dayToCheck.getHours();
-        let sunriseMinutes = dayToCheck.getMinutes();
+      const dayToCheck = new Date(sunriseInformation.current.sunrise * 1000);
+      const sunriseHour = dayToCheck.getHours();
+      let sunriseMinutes = dayToCheck.getMinutes();
 
-        // correcting if minutes are in the single digits
-        if(sunriseMinutes.toString().length < 2) {
-          sunriseMinutes = '0' + sunriseMinutes
-        }
-        
-        const timeOfSunrise = `${sunriseHour}:${sunriseMinutes}`
-        return timeOfSunrise
+      // correcting if minutes are in the single digits
+      if (sunriseMinutes.toString().length < 2) {
+        sunriseMinutes = '0' + sunriseMinutes;
+      }
+
+      const timeOfSunrise = `${sunriseHour}:${sunriseMinutes}`;
+      return timeOfSunrise;
     } catch (error) {
       throwSearchError();
-      console.log(error);
     }
-  }
+  };
+
   const getSunsetMetric = async (sunsetInformation) => {
     try {
-        const dayToCheck = new Date(sunsetInformation.current.sunset * 1000);
-        const sunsetHour = dayToCheck.getHours();
-        
-        // correcting if minutes are in the single digits
-        let sunsetMinutes = dayToCheck.getMinutes();
-        if(sunsetMinutes.toString().length < 2) {
-          sunsetMinutes = '0' + sunsetMinutes;
-        }
-        const timeOfSunset = `${sunsetHour}:${sunsetMinutes}`
-        return timeOfSunset
+      const dayToCheck = new Date(sunsetInformation.current.sunset * 1000);
+      const sunsetHour = dayToCheck.getHours();
+
+      // correcting if minutes are in the single digits
+      let sunsetMinutes = dayToCheck.getMinutes();
+      if (sunsetMinutes.toString().length < 2) {
+        sunsetMinutes = '0' + sunsetMinutes;
+      }
+      const timeOfSunset = `${sunsetHour}:${sunsetMinutes}`;
+      return timeOfSunset;
     } catch (error) {
       throwSearchError();
-      console.log(error);
     }
-  }
+  };
 
   const getdewPointMetric = async (dewPointInformation) => {
     try {
       return Math.floor(dewPointInformation.current.dew_point);
     } catch (error) {
-      throwSearchError()
+      throwSearchError();
     }
-  }
+  };
 
   const getChanceOfRain = async (chanceOfRainInformation) => {
     try {
       return `${chanceOfRainInformation.daily[0].pop * 100}%`;
     } catch (error) {
-      throwSearchError()
-      console.log(error)
+      throwSearchError();
     }
-  }
+  };
 
   const getHumidity = async (humidityInformation) => {
     try {
       return `${humidityInformation.current.humidity}%`;
     } catch (error) {
-      throwSearchError()
-      console.log(error)
+      throwSearchError();
     }
-  }
+  };
 
   const getVisibility = async (visibilityInformation) => {
-    try{
-      if(unitsForSearch === 'metric') {
-        return `${visibilityInformation.current.visibility / 1000}Km`
+    try {
+      if (unitsForSearch === 'metric') {
+        return `${visibilityInformation.current.visibility / 1000}Km`;
       } else if (unitsForSearch === 'imperial') {
-        return `${((visibilityInformation.current.visibility / 1000) * 1.609344).toFixed
-        (2)} Miles`
+        return `${(
+          (visibilityInformation.current.visibility / 1000) *
+          1.609344
+        ).toFixed(2)} Miles`;
       }
     } catch (error) {
       throwSearchError();
-      console.log(error)
     }
-  }
+  };
 
   const getWhatTempFeelsLike = async (feelsLikeInformation) => {
     try {
-      return `${feelsLikeInformation.current.feels_like}°`
+      return `${feelsLikeInformation.current.feels_like}°`;
     } catch (error) {
-      throwSearchError()
-      console.log(error);
+      throwSearchError();
     }
-  }
+  };
 
   const getUvIndex = async (uvIndexInformation) => {
     try {
-      return(`${uvIndexInformation.current.uvi} : ${uvIndexChart[Math.floor(uvIndexInformation.current.uvi)]}`);
+      return `${uvIndexInformation.current.uvi} : ${
+        uvIndexChart[Math.floor(uvIndexInformation.current.uvi)]
+      }`;
     } catch (error) {
       throwSearchError();
-      console.log(error)
     }
+  };
 
-  }
-
+  /**
+   * gets inputs from index.js and uses it to gather daily metrics from above functions
+   * @param {*} latitude 
+   * @param {*} longitude 
+   */
   const populateDayOfMetrics = async (latitude, longitude) => {
     try {
       // Get Metrics info from API
-      const searchedMetrics = await getDayOfMetrics(latitude, longitude)
+      const searchedMetrics = await getDayOfMetrics(latitude, longitude);
 
       // Populate Sunrise
       const sunriseTime = await getSunriseMetric(searchedMetrics);
@@ -162,7 +163,7 @@ const metricsInSearchedUnits = (() => {
       humidity.innerText = humidityPercentage;
 
       // Populate Visibility Km or miles
-      const currentVisibility = await getVisibility(searchedMetrics)
+      const currentVisibility = await getVisibility(searchedMetrics);
       visibility.innerText = currentVisibility;
 
       // Populate Feels Like
@@ -173,12 +174,11 @@ const metricsInSearchedUnits = (() => {
       const currentUvIndex = await getUvIndex(searchedMetrics);
       uvIndex.innerText = currentUvIndex;
     } catch (error) {
-      throwSearchError()
-      console.log(error);
+      throwSearchError();
     }
-  }
+  };
 
   return { populateDayOfMetrics };
-})()
+})();
 
 export { metricsInSearchedUnits };
