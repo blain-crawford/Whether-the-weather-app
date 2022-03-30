@@ -66,10 +66,10 @@ const weatherInSearchedUnits = (() => {
    */
   const showAreaCurrentTemp = async (tempInformation) => {
     try {
-      currentTemp.innerText = `${Math.floor(tempInformation.main.temp)}°`;
-      currentMinMax.innerText = `${Math.floor(
+      currentTemp.innerText = `${Math.round(tempInformation.main.temp)}°`;
+      currentMinMax.innerText = `${Math.round(
         tempInformation.main.temp_min,
-      )}°/${Math.floor(tempInformation.main.temp_max)}°`;
+      )}°/${Math.round(tempInformation.main.temp_max)}°`;
     } catch (error) {
       throwSearchError();
     }
@@ -148,9 +148,9 @@ const weatherInSearchedUnits = (() => {
       //Add to divs in fiveday forecast
       for (let j = 0; j < lowTemps.length; j++) {
         lowTemps[j].innerText =
-          Math.floor(storedForecastHighsAndLows[`day${j}`].min) + '°';
+          Math.round(storedForecastHighsAndLows[`day${j}`].min) + '°';
         highTemps[j].innerText =
-          Math.floor(storedForecastHighsAndLows[`day${j}`].max) + '°';
+          Math.round(storedForecastHighsAndLows[`day${j}`].max) + '°';
       }
     } catch (error) {
       throwSearchError();
