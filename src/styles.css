@@ -115,36 +115,17 @@ html {
 
 /* styling for label section of forecast */
 #forecast-header {
+  width: 98%;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid black;
 }
 
 #forecast-header h4 {
   padding-top: 10px;
   padding-bottom: 10px;
   margin: 0;
-}
-
-#day-label {
-  position: relative;
-  left: 15px;
-}
-
-#humidity-label {
-  position: relative;
-  left: 30px;
-}
-
-#rain-label {
-  position: relative;
-  right: 20px;
-}
-
-#temp-label {
-  position: relative;
-  right: 15px;
 }
 
 /* Styling for individual forecasts */
@@ -357,18 +338,6 @@ h5 {
     font-size: 10px;
   }
 
-  #day-label {
-    left: -7px;
-  }
-
-  #rain-label {
-    left: -8px;
-  }
-
-  #temp-label {
-    left: 0px;
-  }
-
   .weather-symbol {
     width: 15px;
     height: auto;
@@ -454,23 +423,5 @@ h5 {
   #open-weather-map {
     width: 75px;
     height: auto;
-  }
-}
-
-@media (max-width: 1600px) and (min-width: 650px) {
-
-  #humidity-label {
-    position: relative;
-    left: -20px;
-  }
-
-  #rain-label {
-    position: relative;
-    right: 50px;
-  }
-
-  #temp-label {
-    position: relative;
-    right: 50px;
   }
 }
