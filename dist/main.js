@@ -171,7 +171,7 @@ var weatherInSearchedUnits = function () {
           switch (_context4.prev = _context4.next) {
             case 0:
               try {
-                currentWeatherIcon.src = "http://openweathermap.org/img/wn/".concat(currentWeatherInformation.weather[0].icon, "@2x.png");
+                currentWeatherIcon.src = "https://openweathermap.org/img/wn/".concat(currentWeatherInformation.weather[0].icon, "@2x.png");
               } catch (error) {
                 (0,_index_js__WEBPACK_IMPORTED_MODULE_1__.throwSearchError)();
                 console.log(error);
@@ -959,7 +959,7 @@ var searchCityAndState = /*#__PURE__*/function () {
             cityName = cityAndState[0];
             stateName = cityAndState[1];
             _context.next = 6;
-            return fetch("http://api.openweathermap.org/geo/1.0/direct?q=".concat(cityName, ",").concat(stateName, ",US&appid=").concat(_key_js__WEBPACK_IMPORTED_MODULE_2__.key), {
+            return fetch("https://api.openweathermap.org/geo/1.0/direct?q=".concat(cityName, ",").concat(stateName, ",US&appid=").concat(_key_js__WEBPACK_IMPORTED_MODULE_2__.key), {
               mode: 'cors'
             });
 

@@ -81,7 +81,7 @@ const weatherInSearchedUnits = (() => {
    */
   const showCurrentWeather = async (currentWeatherInformation) => {
     try {
-      currentWeatherIcon.src = `http://openweathermap.org/img/wn/${currentWeatherInformation.weather[0].icon}@2x.png`;
+      currentWeatherIcon.src = `https://openweathermap.org/img/wn/${currentWeatherInformation.weather[0].icon}@2x.png`;
     } catch (error) {
       throwSearchError();
       console.log(error);

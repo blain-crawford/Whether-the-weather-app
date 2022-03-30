@@ -75,7 +75,7 @@ const searchCityAndState = async (cityAndState) => {
     const cityName = cityAndState[0];
     const stateName = cityAndState[1];
     const cityAndStateResponse = await fetch(
-      `http://api.openweathermap.org/geo/1.0/direct?q=${cityName},${stateName},US&appid=${key}`,
+      `https://api.openweathermap.org/geo/1.0/direct?q=${cityName},${stateName},US&appid=${key}`,
       {
         mode: 'cors',
       },
