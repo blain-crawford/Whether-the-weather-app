@@ -47,7 +47,7 @@ html {
 
 #city-input {
   width: 30%;
-  margin-bottom: 1px;
+  margin-bottom: 5px;
   border: 2px solid rgb(75, 174, 240);
   border-radius: 5px;
 }
@@ -61,6 +61,15 @@ html {
 #search-button {
   width: 30%;
   cursor: pointer;
+  border-radius: 5px;
+  line-height: 20px;
+  text-align: center;
+  background-color: rgb(238, 238, 238);
+}
+
+#search-button:hover {
+  -webkit-box-shadow: inset 5px 5px 50px -7px rgba(255,255,255,0.71); 
+  box-shadow: inset 5px 5px 50px -7px rgba(255,255,255,0.71);
 }
 
 #unit-selector {
@@ -71,6 +80,12 @@ html {
   border-radius: 5px;
   margin-left: 2%;
   cursor: pointer;
+}
+
+#unit-selector:hover {
+  font-size: 16.25px;
+  -webkit-box-shadow: inset 5px 5px 16px -7px rgba(255,255,255,0.71); 
+  box-shadow: inset 5px 5px 50px -7px rgba(255,255,255,0.71);
 }
 
 .unit {
@@ -126,6 +141,11 @@ html {
   padding-top: 10px;
   padding-bottom: 10px;
   margin: 0;
+}
+
+#header-underline {
+  border: 1px solid black;
+  opacity: .2;
 }
 
 /* Styling for individual forecasts */
