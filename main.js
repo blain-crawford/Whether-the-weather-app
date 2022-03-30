@@ -1006,7 +1006,7 @@ var searchName = /*#__PURE__*/function () {
           case 0:
             _context2.prev = 0;
             _context2.next = 3;
-            return fetch("http://api.openweathermap.org/geo/1.0/direct?q=".concat(city, "&appid=").concat(_key_js__WEBPACK_IMPORTED_MODULE_2__.key), {
+            return fetch("https://api.openweathermap.org/geo/1.0/direct?q=".concat(city, "&appid=").concat(_key_js__WEBPACK_IMPORTED_MODULE_2__.key), {
               mode: 'cors'
             });
 
@@ -1059,7 +1059,7 @@ var searchZipCode = /*#__PURE__*/function () {
           case 0:
             _context3.prev = 0;
             _context3.next = 3;
-            return fetch("http://api.openweathermap.org/geo/1.0/zip?zip=".concat(zipcode, "&appid=").concat(_key_js__WEBPACK_IMPORTED_MODULE_2__.key), {
+            return fetch("https://api.openweathermap.org/geo/1.0/zip?zip=".concat(zipcode, "&appid=").concat(_key_js__WEBPACK_IMPORTED_MODULE_2__.key), {
               mode: 'cors'
             });
 
@@ -1071,7 +1071,7 @@ var searchZipCode = /*#__PURE__*/function () {
           case 6:
             zipcodeInformation = _context3.sent;
             _context3.next = 9;
-            return fetch("http://api.openweathermap.org/geo/1.0/direct?q=".concat(zipcodeInformation.name, ",US&appid=").concat(_key_js__WEBPACK_IMPORTED_MODULE_2__.key, "&limit=10"), {
+            return fetch("https://api.openweathermap.org/geo/1.0/direct?q=".concat(zipcodeInformation.name, ",US&appid=").concat(_key_js__WEBPACK_IMPORTED_MODULE_2__.key, "&limit=10"), {
               mode: 'cors'
             });
 
