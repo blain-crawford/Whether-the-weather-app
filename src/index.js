@@ -97,7 +97,7 @@ const searchCityAndState = async (cityAndState) => {
 const searchName = async (city) => {
   try {
     const cityResponse = await fetch(
-      `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${key}`,
+      `https://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${key}`,
       {
         mode: 'cors',
       },
@@ -124,7 +124,7 @@ const searchName = async (city) => {
 const searchZipCode = async (zipcode) => {
   try {
     const zipcodeResponse = await fetch(
-      `http://api.openweathermap.org/geo/1.0/zip?zip=${zipcode}&appid=${key}`,
+      `https://api.openweathermap.org/geo/1.0/zip?zip=${zipcode}&appid=${key}`,
       {
         mode: 'cors',
       },
@@ -133,7 +133,7 @@ const searchZipCode = async (zipcode) => {
     const zipcodeInformation = await zipcodeResponse.json();
 
     const stateResponse = await fetch(
-      `http://api.openweathermap.org/geo/1.0/direct?q=${zipcodeInformation.name},US&appid=${key}&limit=10`,
+      `https://api.openweathermap.org/geo/1.0/direct?q=${zipcodeInformation.name},US&appid=${key}&limit=10`,
       {
         mode: 'cors',
       },
