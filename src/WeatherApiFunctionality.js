@@ -1,4 +1,4 @@
-import { key, gifKey } from './key.js';
+import { key } from './key.js';
 import { throwSearchError, unitsForSearch } from './index.js';
 
 const weatherInSearchedUnits = (() => {
@@ -14,11 +14,11 @@ const weatherInSearchedUnits = (() => {
   const chanceOfRainDisplays = document.querySelectorAll(
     '.chance-of-rain-display',
   );
-  
+
   /**
    * takes info provided from fivedayforecast fetch and returns for use of forecast functions
-   * @param {*} latitude 
-   * @param {*} longitude 
+   * @param {*} latitude
+   * @param {*} longitude
    * @returns api promise parsed into JSON format
    */
   const retrieveWeatherInformationForForecast = async (latitude, longitude) => {
@@ -40,8 +40,8 @@ const weatherInSearchedUnits = (() => {
 
   /**
    * takes info from searched city and uses it to populate current day weather/temp
-   * @param {*} latitude 
-   * @param {*} longitude 
+   * @param {*} latitude
+   * @param {*} longitude
    * @returns api promise in json format
    */
   const retrieveWeatherInformationForToday = async (latitude, longitude) => {
@@ -53,16 +53,16 @@ const weatherInSearchedUnits = (() => {
         },
       );
       const todayWeatherInformation = await todayWeatherResponse.json();
-      return todayWeatherInformation
+      return todayWeatherInformation;
     } catch (error) {
       throwSearchError();
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   /**
    * uses retrieveWeatherInformationForToday to get temp info
-   * @param {*} tempInformation 
+   * @param {*} tempInformation
    */
   const showAreaCurrentTemp = async (tempInformation) => {
     try {
@@ -77,7 +77,7 @@ const weatherInSearchedUnits = (() => {
 
   /**
    * uses retrieveWeatherInformationForToday to weather info
-   * @param {*} currentWeatherInformation 
+   * @param {*} currentWeatherInformation
    */
   const showCurrentWeather = async (currentWeatherInformation) => {
     try {
@@ -158,10 +158,10 @@ const weatherInSearchedUnits = (() => {
   };
 
   /**
-   * gets latitude and longitude from city search and 
+   * gets latitude and longitude from city search and
    * uses it to give info to above functions to populate 5 day forecast
-   * @param {*} latitude 
-   * @param {*} longitude 
+   * @param {*} latitude
+   * @param {*} longitude
    */
   const showFiveDayForecast = async (latitude, longitude) => {
     try {
@@ -202,7 +202,6 @@ const weatherInSearchedUnits = (() => {
       populateForecastHumidity(forecastInformation);
       populateForecastChanceOfRain(forecastInformation);
       populateForecastHighAndLow(forecastInformation);
-
     } catch (error) {
       throwSearchError();
     }
@@ -213,7 +212,7 @@ const weatherInSearchedUnits = (() => {
     showFiveDayForecast,
     showAreaCurrentTemp,
     showCurrentWeather,
-    retrieveWeatherInformationForToday
+    retrieveWeatherInformationForToday,
   };
 })();
 

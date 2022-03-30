@@ -2,10 +2,7 @@ import 'regenerator-runtime/runtime';
 import './styles.css';
 import { key } from './key.js';
 import { weatherInSearchedUnits } from './WeatherApiFunctionality.js';
-import {
-  metricsInSearchedResults,
-  metricsInSearchedUnits,
-} from './dayOfMetrics.js';
+import { metricsInSearchedUnits } from './dayOfMetrics.js';
 
 const cityInput = document.querySelector('#city-input');
 const searchButton = document.querySelector('#search-button');
