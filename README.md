@@ -79,6 +79,9 @@ Created to provide accurate weather information for any location on earthusing O
       src="./src/images/daily-metrics.png"
     />
   <li>Whether the Weather is designed to scale to fit use in any mobile device!</li>
+  <img
+    src="./src/images/mobile-view.png"
+  />
 </ul>
 # Running Application
 
